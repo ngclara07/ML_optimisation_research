@@ -1,0 +1,182 @@
+[
+  {
+    "case": "balanced_independent",
+    "method": "uniform",
+    "reached": 12,
+    "median_final_gap": 0.0,
+    "median_refreshes": 0.0,
+    "median_proxy_work_to_target": 513288.0,
+    "median_seconds_to_target": 0.009823950007557869
+  },
+  {
+    "case": "balanced_independent",
+    "method": "lipschitz",
+    "reached": 12,
+    "median_final_gap": 0.0,
+    "median_refreshes": 0.0,
+    "median_proxy_work_to_target": 513288.0,
+    "median_seconds_to_target": 0.007161199988331646
+  },
+  {
+    "case": "balanced_independent",
+    "method": "scheduled_gain",
+    "reached": 12,
+    "median_final_gap": 4.440892098500626e-16,
+    "median_refreshes": 40.0,
+    "median_proxy_work_to_target": 564704.0,
+    "median_seconds_to_target": 0.005174399993848056
+  },
+  {
+    "case": "balanced_independent",
+    "method": "triggered_gain",
+    "reached": 12,
+    "median_final_gap": 4.579947754379532e-09,
+    "median_refreshes": 10.0,
+    "median_proxy_work_to_target": 1131992.0,
+    "median_seconds_to_target": 0.015552350028883666
+  },
+  {
+    "case": "scaled_independent",
+    "method": "uniform",
+    "reached": 12,
+    "median_final_gap": 2.220446049250313e-16,
+    "median_refreshes": 0.0,
+    "median_proxy_work_to_target": 513288.0,
+    "median_seconds_to_target": 0.005549850000534207
+  },
+  {
+    "case": "scaled_independent",
+    "method": "lipschitz",
+    "reached": 0,
+    "median_final_gap": 0.09682875530170598,
+    "median_refreshes": 0.0,
+    "median_proxy_work_to_target": null,
+    "median_seconds_to_target": null
+  },
+  {
+    "case": "scaled_independent",
+    "method": "scheduled_gain",
+    "reached": 12,
+    "median_final_gap": 0.0,
+    "median_refreshes": 40.0,
+    "median_proxy_work_to_target": 564704.0,
+    "median_seconds_to_target": 0.0038298500003293157
+  },
+  {
+    "case": "scaled_independent",
+    "method": "triggered_gain",
+    "reached": 12,
+    "median_final_gap": 4.384925311740062e-09,
+    "median_refreshes": 10.0,
+    "median_proxy_work_to_target": 1244184.0,
+    "median_seconds_to_target": 0.010501300013856962
+  },
+  {
+    "case": "balanced_correlated",
+    "method": "uniform",
+    "reached": 12,
+    "median_final_gap": 6.605656656555325e-06,
+    "median_refreshes": 0.0,
+    "median_proxy_work_to_target": 1641536.0,
+    "median_seconds_to_target": 0.016015900007914752
+  },
+  {
+    "case": "balanced_correlated",
+    "method": "lipschitz",
+    "reached": 12,
+    "median_final_gap": 7.348736291046265e-06,
+    "median_refreshes": 0.0,
+    "median_proxy_work_to_target": 1641536.0,
+    "median_seconds_to_target": 0.016052199964178726
+  },
+  {
+    "case": "balanced_correlated",
+    "method": "scheduled_gain",
+    "reached": 0,
+    "median_final_gap": 0.000548000202685861,
+    "median_refreshes": 40.0,
+    "median_proxy_work_to_target": null,
+    "median_seconds_to_target": null
+  },
+  {
+    "case": "balanced_correlated",
+    "method": "triggered_gain",
+    "reached": 0,
+    "median_final_gap": 0.014245347452249701,
+    "median_refreshes": 10.0,
+    "median_proxy_work_to_target": null,
+    "median_seconds_to_target": null
+  },
+  {
+    "case": "scaled_correlated",
+    "method": "uniform",
+    "reached": 6,
+    "median_final_gap": 8.31618956291802e-05,
+    "median_refreshes": 0.0,
+    "median_proxy_work_to_target": 1897956.0,
+    "median_seconds_to_target": 0.020351700019091368
+  },
+  {
+    "case": "scaled_correlated",
+    "method": "lipschitz",
+    "reached": 0,
+    "median_final_gap": 0.02120318705410007,
+    "median_refreshes": 0.0,
+    "median_proxy_work_to_target": null,
+    "median_seconds_to_target": null
+  },
+  {
+    "case": "scaled_correlated",
+    "method": "scheduled_gain",
+    "reached": 0,
+    "median_final_gap": 0.00111427333862113,
+    "median_refreshes": 40.0,
+    "median_proxy_work_to_target": null,
+    "median_seconds_to_target": null
+  },
+  {
+    "case": "scaled_correlated",
+    "method": "triggered_gain",
+    "reached": 0,
+    "median_final_gap": 0.0268642100673806,
+    "median_refreshes": 10.0,
+    "median_proxy_work_to_target": null,
+    "median_seconds_to_target": null
+  },
+  {
+    "case": "diabetes",
+    "method": "uniform",
+    "reached": 12,
+    "median_final_gap": 1.8607835272632656e-09,
+    "median_refreshes": 0.0,
+    "median_proxy_work_to_target": 919234.0,
+    "median_seconds_to_target": 0.008643250010209158
+  },
+  {
+    "case": "diabetes",
+    "method": "lipschitz",
+    "reached": 12,
+    "median_final_gap": 1.8607835272632656e-09,
+    "median_refreshes": 0.0,
+    "median_proxy_work_to_target": 919234.0,
+    "median_seconds_to_target": 0.008632849989226088
+  },
+  {
+    "case": "diabetes",
+    "method": "scheduled_gain",
+    "reached": 9,
+    "median_final_gap": 3.113432183710074e-05,
+    "median_refreshes": 40.0,
+    "median_proxy_work_to_target": 1754732.0,
+    "median_seconds_to_target": 0.016452900017611682
+  },
+  {
+    "case": "diabetes",
+    "method": "triggered_gain",
+    "reached": 5,
+    "median_final_gap": 0.0005090121694237837,
+    "median_refreshes": 10.0,
+    "median_proxy_work_to_target": 1216044.0,
+    "median_seconds_to_target": 0.01090599998133257
+  }
+]

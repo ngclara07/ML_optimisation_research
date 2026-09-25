@@ -1,0 +1,17 @@
+Case: scaled_correlated; target: 0.0001; paired problem seeds: 12
+Uniform successes: 6/12 [0, 3, 4, 5, 6, 10]
+ASCD successes: 9/12 [0, 1, 4, 5, 6, 7, 8, 9, 10]
+Shared successes: 5/12 [0, 4, 5, 6, 10]
+
+Shared-success first-hit comparison:
+seed 0: uniform step=2160, work=1846672; ASCD step=2280, work=2844008; difference=997336; ratio=1.5401
+seed 4: uniform step=2160, work=1846672; ASCD step=2400, work=2992656; difference=1145984; ratio=1.6206
+seed 5: uniform step=2400, work=2051808; ASCD step=2400, work=2992656; difference=940848; ratio=1.4585
+seed 6: uniform step=2280, work=1949240; ASCD step=2280, work=2844008; difference=894768; ratio=1.4590
+seed 10: uniform step=1920, work=1641536; ASCD step=2280, work=2844008; difference=1202472; ratio=1.7325
+
+Median uniform work on shared successes: 1,846,672
+Median ASCD work on shared successes: 2,844,008
+Median paired ASCD-minus-uniform work: 997,336
+Median paired ASCD/uniform work ratio: 1.5401
+ASCD has greater proxy work on every shared success: True

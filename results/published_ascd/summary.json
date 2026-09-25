@@ -1,0 +1,52 @@
+[
+  {
+    "case": "balanced_independent",
+    "method": "ascd_zero_oracle",
+    "reached": 12,
+    "median_final_gap": 0.0,
+    "median_active_set_size": 48.0,
+    "median_initialization_proxy_work": 19248.0,
+    "median_proxy_work_to_target": 762936.0,
+    "median_seconds_to_target": 0.0119328000000678
+  },
+  {
+    "case": "scaled_independent",
+    "method": "ascd_zero_oracle",
+    "reached": 12,
+    "median_final_gap": 2.220446049250313e-16,
+    "median_active_set_size": 48.0,
+    "median_initialization_proxy_work": 19248.0,
+    "median_proxy_work_to_target": 762936.0,
+    "median_seconds_to_target": 0.012596949993167073
+  },
+  {
+    "case": "balanced_correlated",
+    "method": "ascd_zero_oracle",
+    "reached": 12,
+    "median_final_gap": 3.968090363626331e-06,
+    "median_active_set_size": 48.0,
+    "median_initialization_proxy_work": 19248.0,
+    "median_proxy_work_to_target": 2249416.0,
+    "median_seconds_to_target": 0.03647519997321069
+  },
+  {
+    "case": "scaled_correlated",
+    "method": "ascd_zero_oracle",
+    "reached": 9,
+    "median_final_gap": 5.337875118804902e-05,
+    "median_active_set_size": 48.0,
+    "median_initialization_proxy_work": 19248.0,
+    "median_proxy_work_to_target": 2844008.0,
+    "median_seconds_to_target": 0.04113269998924807
+  },
+  {
+    "case": "diabetes",
+    "method": "ascd_zero_oracle",
+    "reached": 12,
+    "median_final_gap": 2.3548594185740512e-09,
+    "median_active_set_size": 10.0,
+    "median_initialization_proxy_work": 4430.0,
+    "median_proxy_work_to_target": 984864.0,
+    "median_seconds_to_target": 0.01756804998149164
+  }
+]

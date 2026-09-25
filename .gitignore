@@ -1,0 +1,26 @@
+.venv/
+__pycache__/
+*.pyc
+
+# LaTeX build files
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+report/qa/
+!results/run.log
+
+# ZIP files
+stage3_showcase_2026-09-26/
+stage3_showcase_2026-09-26.zip
+
+@"
+
+# Local / secondary report artifacts
+report/Research Report.docx
+
+# Execution logs
+results/*.log
+"@ | Add-Content .gitignore
