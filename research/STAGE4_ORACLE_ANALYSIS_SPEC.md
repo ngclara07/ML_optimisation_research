@@ -2,179 +2,295 @@
 
 Date: 26 September 2026.
 
-Status: predeclared analysis plan before Stage 4 experimental runs.
+Status: **Phase A zero-oracle mechanism diagnosis and Phase B published
+oracle-quality comparison completed and audited. Under the predeclared
+decision rule, the tested simulated approximate-oracle configurations do
+not justify proceeding directly to a costed approximate-inner-product
+implementation.**
 
-## Starting point
+This Stage 4 analysis was developed with AI assistance. The frozen Stage 3
+results remain unchanged.
 
-Stage 3 implemented Approximate Steepest Coordinate Descent (ASCD) on
-the frozen ridge-regression benchmark using the paper's zero gradient
-oracle and exact full-gradient initialization.
+---
+
+## 1. Starting point
+
+Stage 3 implemented Approximate Steepest Coordinate Descent (ASCD) on the
+frozen ridge-regression benchmark using the paper's zero gradient oracle
+and exact full-gradient initialization.
 
 On all four synthetic cases, whose coordinate dimension is 48, the
-median ASCD active-set size was 48. On the scaled-correlated case,
-ASCD reached the target in 9/12 runs versus 6/12 for uniform sampling,
-but on all five seeds where both methods succeeded ASCD recorded greater
-proxy work under the Stage 3 accounting convention.
+reported median ASCD active-set size was 48. On the scaled-correlated case,
+ASCD reached the target in 9/12 runs versus 6/12 for uniform sampling.
 
-Stage 4 does not alter or reinterpret the frozen Stage 3 results.
+A paired Stage 3 comparison showed that five seeds succeeded under both
+uniform sampling and zero-oracle ASCD:
 
-## Research question
+`[0, 4, 5, 6, 10]`.
 
-Why does zero-oracle ASCD retain an effectively full active set on the
-synthetic ridge problems, and can a tighter published gradient oracle
-reduce active-set size sufficiently to compensate for its additional
-information-acquisition cost?
+On all five shared successes, zero-oracle ASCD recorded greater proxy work
+under the Stage 3 accounting convention. Median recorded work on those
+shared successes was:
 
-## Primary source
+- uniform: `1,846,672`;
+- ASCD: `2,844,008`;
+- median paired ASCD-minus-uniform difference: `997,336`;
+- median ASCD/uniform recorded-work ratio: `1.5401`.
+
+Those results established that the zero-oracle ASCD configuration changed
+which scaled-correlated problem instances reached the target but did not
+demonstrate a recorded cost advantage under the Stage 3 proxy convention.
+
+Stage 4 does not alter, overwrite, or reinterpret the frozen Stage 3
+results. The Stage 3 Git tag remains the immutable comparison point:
+
+`stage3-showcase-2026-09-26`.
+
+---
+
+## 2. Research question
+
+Stage 4 asks:
+
+> Why does zero-oracle ASCD retain an effectively full active set on the
+> synthetic ridge problems, and can tighter published gradient-oracle
+> information reduce active-set size sufficiently to compensate for its
+> additional information-acquisition cost?
+
+Stage 4 was divided into two phases:
+
+1. **Phase A:** diagnose the mechanism responsible for the almost-full
+   active sets observed under the zero oracle;
+2. **Phase B:** compare published ASCD oracle-quality configurations under
+   the same frozen benchmark and coordinate-update rule.
+
+Both phases are now complete.
+
+---
+
+## 3. Primary source
+
+The primary source is:
 
 Sebastian U. Stich, Anant Raj, and Martin Jaggi,
-"Approximate Steepest Coordinate Descent", ICML 2017,
+*Approximate Steepest Coordinate Descent*, ICML 2017,
 especially Algorithm 1, Section 4, and Section 7.
 
-For least squares the paper lists:
+For least-squares problems, the paper describes a hierarchy of gradient
+oracles.
 
-1. exact inner-product oracle g1 with delta_ij = 0;
-2. approximate inner-product oracle g2 with
-   delta_ij = epsilon ||X_i|| ||X_j||;
-3. zero oracle g3 = 0 with
-   delta_ij = ||X_i|| ||X_j||.
+### Exact inner-product oracle: `g1`
 
-The Stage 3 method corresponds to g3.
+The exact oracle uses the true cross-coordinate inner product and has
 
-## Frozen experimental conditions
+`delta_ij = 0`.
 
-Unless explicitly identified as a diagnostic-only experiment, Stage 4
-retains:
+### Approximate inner-product oracle: `g2`
+
+The approximate oracle supplies an approximation with a certified error
+bound of the form
+
+`delta_ij = epsilon ||X_i|| ||X_j||`.
+
+### Zero oracle: `g3`
+
+The zero oracle uses
+
+`g3_ij = 0`
+
+for cross-coordinate gradient changes, with certified error
+
+`delta_ij = ||X_i|| ||X_j||`.
+
+The Stage 3 ASCD implementation corresponds to `g3`.
+
+The Stage 4 simulated `g2` configurations are oracle-quality experiments.
+They are not claimed to reproduce a practical embedding implementation or
+the exact synthetic protocol used in the paper.
+
+---
+
+## 4. Frozen experimental conditions
+
+Unless explicitly identified as diagnostic-only, Stage 4 retains the same
+benchmark conditions as Stage 3:
 
 - the same five benchmark cases;
 - the same 12 problem seeds;
-- lambda = 0.03;
-- w = 0 initialization;
-- target objective gap 1e-4;
+- `lambda = 0.03`;
+- initial point `w = 0`;
+- target objective gap `1e-4`;
 - 120-update checkpoint spacing;
-- maximum 2,400 coordinate updates;
-- the same exact ridge coordinate minimization rule.
+- maximum of 2,400 coordinate updates;
+- the same exact ridge coordinate-minimization rule;
+- the same problem-generation code;
+- the same ASCD active-set construction.
 
-The existing Stage 3 tag remains the immutable comparison point.
+The five cases are:
 
-## Phase A: zero-oracle mechanism diagnosis
+1. balanced independent;
+2. scaled independent;
+3. balanced correlated;
+4. scaled correlated;
+5. diabetes.
 
-Replay the existing zero-oracle ASCD algorithm while recording per-update
-diagnostics without changing its coordinate selections or updates.
+The four synthetic cases use `d = 48`. The diabetes case uses `d = 10`.
 
-For each update record at least:
+The Stage 3 results remain the baseline reference and are not replaced by
+Stage 4 results.
 
-- case and problem seed;
+---
+
+# Phase A: zero-oracle mechanism diagnosis
+
+## 5. Phase A objective
+
+Phase A replayed the existing zero-oracle ASCD algorithm while recording
+per-update diagnostics **without changing coordinate selections or
+optimization updates**.
+
+The predeclared mechanism hypothesis was:
+
+> Accumulated zero-oracle uncertainty causes the certified lower gradient
+> bounds to collapse toward zero while the upper bounds remain too loose
+> for the strict ASCD exclusion condition to remove coordinates.
+
+This was treated as a hypothesis before the diagnostic run rather than as
+an assumed explanation.
+
+---
+
+## 6. Phase A diagnostic implementation
+
+The implementation is:
+
+`src/stage4_active_set_diagnostics.py`.
+
+It preserves:
+
+- the same random-number generator convention;
+- the same seed offset;
+- the same `active_set()` implementation;
+- the same coordinate-selection draw;
+- the same exact coordinate update;
+- the same residual update;
+- the same zero-oracle radius update;
+- the same Stage 3 checkpoint proxy-work calculation.
+
+Additional full-gradient calculations are used only for diagnostics and
+are not charged to the Stage 3 proxy.
+
+Per-update measurements include:
+
+- case;
+- problem seed;
 - update number;
 - selected coordinate;
-- active-set size |I|;
-- active-set fraction |I|/d;
+- active-set size;
+- active-set fraction;
+- excluded-coordinate count and fraction;
 - median and maximum certified radius;
-- median and maximum true |gradient|;
-- median upper and lower bounds;
-- fraction of coordinates with lower bound equal to zero;
-- number/fraction of coordinates excluded;
+- median and maximum true absolute gradient;
+- median and maximum upper bound;
+- median and maximum lower bound;
+- number and fraction of coordinates with zero lower bound;
+- mean squared active-set lower bound;
+- selected-coordinate gradient and bounds;
+- selected-coordinate step;
+- minimum certified-interval slack;
 - objective gap at available checkpoints.
 
-The primary mechanism question is whether accumulated zero-oracle radii
-cause lower bounds to collapse toward zero and/or upper bounds to remain
-too large for the strict ASCD exclusion condition.
+---
 
-That explanation must be supported by the recorded diagnostics rather
-than assumed from the aggregate active-set median.
+## 7. Frozen Stage 3 replay validation
 
-## Phase B: published oracle-quality comparison
+The Phase A implementation compares every saved checkpoint against
 
-Compare the following oracle configurations while retaining the same
-benchmark and coordinate-update rule:
+`results/published_ascd/trajectories.csv`.
 
-- g3: existing zero oracle;
-- g1: exact inner-product oracle;
-- simulated g2 at predeclared epsilon values.
+Both objective gap and recorded proxy work are validated.
 
-Initial simulated g2 precision grid:
+The diagnostic run reported:
 
-epsilon in {1.0, 0.5, 0.25, 0.125}.
+`Stage 3 trajectory validation: PASSED`.
 
-These epsilon values are our predeclared experimental choices; they are
-not claimed to be the paper's exact experimental grid.
+Therefore the Phase A measurements describe the frozen Stage 3
+zero-oracle trajectory rather than a modified optimization method.
 
-For simulated g2, construct an oracle value satisfying
+---
 
-|S(i,j) - X_i^T X_j|
-    <= epsilon ||X_i|| ||X_j||
+## 8. Phase A results
 
-and use the corresponding certified error radius.
+The principal aggregate results were:
 
-The simulation is intended to isolate the effect of oracle precision.
-It must not be described as a measured low-dimensional-embedding cost.
+| Case | Success | Median active set | Fraction full active set | Fraction with pruning | Median zero-lower-bound fraction |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Balanced independent | 12/12 | 48 | 0.9994 | 0.0006 | 1.0000 |
+| Scaled independent | 12/12 | 48 | 0.9994 | 0.0006 | 1.0000 |
+| Balanced correlated | 12/12 | 48 | 0.9994 | 0.0006 | 1.0000 |
+| Scaled correlated | 9/12 | 48 | 0.9994 | 0.0006 | 1.0000 |
+| Diabetes | 12/12 | 10 | 0.9996 | 0.0004 | 1.0000 |
 
-## Primary Stage 4 measurements
+The earlier Stage 3 statement that the median active-set size equals the
+full dimension therefore understates the strength of the effect. The full
+coordinate set is active on almost every zero-oracle update.
 
-For every oracle configuration report:
+For the synthetic cases, pruning occurs on only about 0.06% of recorded
+updates. For diabetes, pruning occurs on about 0.04% of recorded updates.
 
-- target successes out of 12;
-- first saved checkpoint reaching the target;
-- median active-set size;
-- active-set-size distribution over updates;
-- fraction of updates with |I| < d;
-- fraction of updates with |I| <= d/2;
-- objective-gap trajectories;
-- recorded setup cost;
-- recorded per-update selection/oracle cost;
-- total proxy work to target among successful runs.
+---
 
-Paired seed comparisons should be reported whenever success sets overlap.
+## 9. Lower-bound collapse
 
-## Cost-accounting rule
+The ASCD lower bound is
 
-Stage 4 must separate:
+`ell_j = max(0, |gtilde_j| - r_j)`.
 
-1. optimization/update work;
-2. active-set computation;
-3. oracle setup/acquisition;
-4. oracle maintenance;
-5. evaluation-only work.
+The median zero-lower-bound fraction is `1.0000` on every benchmark case.
 
-Exact Gram-matrix availability must not be treated as free merely because
-the benchmark computes related quantities for evaluation.
+Thus, at a typical recorded update, all coordinates have zero certified
+lower bound.
 
-A simulated g2 experiment measures oracle-quality effects only unless a
-real acquisition mechanism and its cost are explicitly implemented.
+The safe exclusion rule requires
 
-## Interpretation constraints
+`u_j^2 < mean(ell_i^2 for i in I)`.
 
-Stage 4 is a comparison on the frozen benchmark, not a reproduction of
-the paper's figures.
+When every lower bound is zero, the right-hand side is zero. Since
+`u_j^2 >= 0`, strict exclusion is impossible.
 
-The paper's one-step theorem should not be applied directly as a guarantee
-for this benchmark because the benchmark retains coordinate-specific L_j
-values and its existing exact coordinate-minimization update.
+The diagnostic plots also show that the certified radii generally remain
+above the scale of the true coordinate gradients, especially on the
+correlated cases.
 
-No new-method or superiority claim is predeclared.
+---
 
-## Planned outputs
+## 10. Phase A mechanism conclusion
 
+Phase A strongly supports the proposed mechanism:
+
+1. passive-coordinate uncertainty accumulates under the zero oracle;
+2. certified radii become at least as large as many stored gradient
+   estimates;
+3. most or all lower bounds collapse to zero;
+4. the active-set exclusion threshold collapses with them;
+5. safe coordinate exclusion becomes almost impossible;
+6. the active set remains essentially full.
+
+This is an empirical mechanism diagnosis, not a formal causal proof.
+
+Phase B was designed as a direct intervention: reduce oracle uncertainty
+and observe whether active-set behavior changes.
+
+---
+
+## 11. Phase A outputs
+
+Completed outputs:
+
+```text
 results/stage4_oracle_analysis/
     zero_oracle_diagnostics.csv
     zero_oracle_summary.json
-    oracle_comparison.csv
-    oracle_summary.json
     active_set_trajectories.png
     radius_tightness.png
-
-## Decision rule before a costed approximate oracle
-
-Proceed to an actual costed approximate-inner-product implementation only
-if the Phase B precision sweep shows that tighter certified errors
-materially reduce active-set size or updates to target on the frozen
-benchmark.
-
-If oracle precision does not materially change pruning, Stage 4 should
-report that negative result rather than introducing additional heuristics.
-
-## Provenance
-
-Stage 4 planning and implementation are AI-assisted. Conclusions should
-distinguish primary-source statements, directly measured experimental
-results, and hypotheses/inferences.
+```
