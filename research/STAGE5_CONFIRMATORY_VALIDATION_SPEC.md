@@ -188,13 +188,15 @@ For every synthetic case:
 
 - n = 800;
 - d = 96;
-- latent coefficients are generated before the design response;
+- latent coefficients are sampled independently from N(0, I_d) and
+  normalized to unit Euclidean norm before response generation;
 - feature dependence follows a Toeplitz covariance matrix
 
   Sigma_ij = rho^|i-j|;
 
 - Gaussian observation noise is added using a fixed predeclared noise
   scale;
+- Gaussian observation noise has fixed standard deviation 0.15; 
 - 12 new problem seeds are used;
 - these problem seeds must not reuse the Stage 1--4 development seeds.
 
@@ -270,17 +272,30 @@ UCI repository identifier:
 
 437
 
-Primary properties:
+The official workbook contains 372 observations and 109 Data-sheet
+columns.
 
-- 372 observations;
-- high-dimensional numeric design;
-- two reported output variables;
-- no missing values reported by UCI.
+The workbook structure is:
 
-The Stage 5 target is the sale-price output.
+- four project-date variables;
+- eight project physical/financial variables, V-1 through V-8;
+- economic variables V-11 through V-29 repeated for time lags 1 through 5;
+- V-9: Actual sales prices (output);
+- V-10: Actual construction costs (output).
 
-The data-preparation script must verify the returned target columns and
-halt if the sale-price target cannot be identified unambiguously.
+Stage 5 uses V-9 as the response and excludes both V-9 and V-10 from
+the predictor matrix.
+
+This leaves 107 predictors before any training-split zero-variance
+filtering.
+
+Because V-11 through V-29 are repeated for five time lags, the prepared
+dataset assigns unique names of the form
+
+V-11_lag1, ..., V-29_lag5.
+
+The workbook schema, lag structure, and output identities are validated
+programmatically before preprocessing.
 
 ---
 
