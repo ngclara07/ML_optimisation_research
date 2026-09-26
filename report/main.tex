@@ -1,21 +1,28 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt]{article}
 
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[margin=1in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage{amsmath,amssymb,booktabs,graphicx,hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
 \usepackage{placeins}
 
 \hypersetup{
     colorlinks=true,
+    linkcolor=blue,
     urlcolor=blue,
-    linkcolor=black
+    citecolor=blue
 }
 
 \title{
-When Does Adaptive Coordinate Sampling Pay for Itself?\\
-\large Ridge-Regression Baselines, ASCD, and Oracle-Quality Analysis
+    \textbf{When Does Adaptive Coordinate Sampling Pay for Itself?}\\
+    \large Ridge-Regression Baselines, ASCD Oracle Quality,
+    and Confirmatory Validation
 }
+
 \author{Ng Jing Yi, Clara}
 \date{September 2026}
 
@@ -25,96 +32,158 @@ When Does Adaptive Coordinate Sampling Pay for Itself?\\
 
 \begin{abstract}
 We study coordinate-selection rules for ridge regression under feature
-scaling and correlation. A baseline experiment compares uniform sampling,
-fixed Lipschitz sampling, periodically refreshed gradient-gain sampling,
-and a progress-triggered gradient-gain heuristic across four synthetic
-regimes and the packaged diabetes regression dataset. Each method is
-evaluated over 12 seeded runs using a common coordinate update and a
-2,400-update budget.
+scaling and correlation. An initial frozen benchmark compares uniform
+sampling, fixed Lipschitz sampling, periodically refreshed gradient-gain
+sampling, and a progress-triggered gradient-gain heuristic across four
+synthetic regimes and the packaged diabetes regression dataset.
 
-We subsequently implement Approximate Steepest Coordinate Descent (ASCD)
-of Stich, Raj, and Jaggi using the paper's zero oracle with exact
-full-gradient initialization. On the scaled-correlated case, this
-configuration reaches the target in 9 of 12 runs compared with 6 of 12
-for uniform sampling, but records greater proxy work on all five seeds
-where both methods succeed.
+We subsequently implement Approximate Steepest Coordinate Descent
+(ASCD) of Stich, Raj, and Jaggi using the paper's zero oracle
+$g^3$ with exact full-gradient initialization while retaining the
+benchmark's exact ridge coordinate-minimization update. On the original
+scaled-correlated case, this configuration reaches the target in 9 of
+12 runs compared with 6 of 12 for uniform sampling, but records greater
+proxy work on every seed where both methods succeed.
 
-A further oracle-quality analysis explains why the zero-oracle ASCD active
-set remains effectively full. On the synthetic cases the full active set
-is used on approximately 99.94\% of updates, and the median fraction of
-coordinates with zero certified lower bound is one. An exact inner-product
-oracle reduces the median active set to one coordinate and reaches the
-target in all runs. After charging a modelled dense-Gram setup cost, the
-exact oracle is cheaper than the zero oracle on the correlated cases and
-diabetes but more expensive on the two independent synthetic cases.
-Simulated approximate oracles at the tested intermediate precisions do not
-provide a useful middle regime. These experiments are comparisons on our
-frozen benchmark rather than reproductions of the paper's published
-figures, and no claim of general superiority or algorithmic novelty is
-made.
+A Stage~4 oracle-quality analysis explains why zero-oracle ASCD provides
+little pruning. Its certified lower bounds collapse to zero on almost
+all coordinates, leaving an effectively full active set. Replacing the
+zero oracle by the exact inner-product oracle $g^1$ reduces the median
+active set to one coordinate. The tested simulated intermediate
+approximate oracles do not provide a useful middle regime.
+
+A predeclared Stage~5 confirmatory experiment then evaluates uniform,
+fixed Lipschitz, $g^3$, and $g^1$ on four held-out Toeplitz synthetic
+families and four additional real regression datasets, using a
+dimension-normalized 200-coordinate-epoch budget, a primary normalized
+objective-gap target of $10^{-6}$, harmonized timing boundaries, and
+three single-threaded timing repetitions. The Stage~4 pruning mechanism
+generalizes to all eight problem families: the median $g^3$ active-set
+fraction is one and its median zero-lower-bound fraction is one, whereas
+$g^1$ has a one-coordinate median active set. Exact information has
+lower paired median time to target on five families but is substantially
+slower on both scaled synthetic families; on the strongly scaled
+correlated family, $g^1$ also reaches the primary target in only 9 of
+12 runs compared with 12 of 12 for $g^3$. None of the four methods
+reaches the primary target on Residential Building within the declared
+budget. These results support a mechanism-level conclusion about oracle
+quality and pruning, but not a claim of universal computational
+superiority or algorithmic novelty.
 \end{abstract}
 
 
+% =============================================================================
 \section{Motivation and related work}
+% =============================================================================
 
-Randomized updates and adaptive information collection feature in
-stochastic block BFGS \cite{gower2016}, minibatch semi-stochastic
-optimization \cite{konecny2016}, parallel and accelerated coordinate
-descent \cite{richtarik2016,fercoq2015}, and randomized linear solvers
-\cite{gower2015}. Adaptive coordinate-selection methods include adaptive
-probabilities for stochastic dual coordinate ascent \cite{csiba2015},
-adaptive importance sampling \cite{perekrestenko2017}, and Approximate
-Steepest Coordinate Descent (ASCD) \cite{stich2017}.
+Randomized updates and adaptive information collection occur throughout
+modern optimization, including stochastic block BFGS
+\cite{gower2016}, minibatch semi-stochastic optimization
+\cite{konecny2016}, parallel and accelerated coordinate descent
+\cite{richtarik2016,fercoq2015}, and randomized iterative linear
+solvers \cite{gower2015}. Adaptive coordinate-selection methods include
+adaptive probabilities for stochastic dual coordinate ascent
+\cite{csiba2015}, adaptive importance sampling
+\cite{perekrestenko2017}, and Approximate Steepest Coordinate Descent
+(ASCD) \cite{stich2017}.
 
-These works prevent gradient-informed sampling or refreshes alone from
-being treated as a new idea. The practical question considered here is
-instead when additional coordinate-selection information improves
-optimization enough to compensate for the work required to obtain and
-maintain it.
+These works prevent gradient-informed coordinate selection or refresh
+rules alone from being treated as new ideas. The practical question in
+this project is instead:
 
-The study proceeds in three stages. First, four baseline selection rules
-are compared. Second, a published ASCD configuration using the paper's
-zero oracle is implemented on the same frozen benchmark. Third, the ASCD
-active-set mechanism is diagnosed and compared across zero, approximate,
-and exact oracle-quality configurations.
+\begin{quote}
+When does additional information about coordinate quality improve
+optimization enough to compensate for the cost of obtaining,
+maintaining, and using that information?
+\end{quote}
+
+The study is developed in four empirical layers.
+
+First, a frozen baseline compares simple fixed and adaptive
+coordinate-sampling rules. Second, the published ASCD selection
+mechanism is implemented with the paper's zero oracle on the same
+benchmark. Third, the oracle-quality mechanism is diagnosed by comparing
+zero, approximate, and exact gradient oracles. Fourth, a predeclared
+confirmatory experiment tests whether the resulting conclusions persist
+on held-out synthetic structures and additional real regression
+datasets under harmonized wall-clock accounting.
+
+The later experiments are comparisons under this project's ridge
+benchmark. They are not reproductions of the published ASCD paper's
+figures.
 
 
+% =============================================================================
 \section{Experimental setup and baseline methods}
+% =============================================================================
 
-For a design matrix $X\in\mathbb{R}^{n\times d}$ and response $y$, we
-minimize
+For a design matrix $X\in\mathbb{R}^{n\times d}$ and response
+$y\in\mathbb{R}^{n}$, we minimize
+
 \begin{equation}
-f(w)=
-\frac{1}{2}\lVert Xw-y\rVert_2^2+
-\frac{\lambda}{2}\lVert w\rVert_2^2,
+f(w)
+=
+\frac{1}{2}\|Xw-y\|_2^2
++
+\frac{\lambda}{2}\|w\|_2^2,
 \qquad
 \lambda=0.03.
+\label{eq:ridge}
 \end{equation}
 
-With residual $r=Xw-y$,
-\begin{equation}
-g_j=X_j^{\mathsf T}r+\lambda w_j,
-\qquad
-L_j=\lVert X_j\rVert_2^2+\lambda,
-\end{equation}
-and each baseline method applies
-\begin{equation}
-w_j \leftarrow w_j-\frac{g_j}{L_j}
-\end{equation}
-and updates the residual.
+With residual
 
-Uniform sampling uses $p_j=1/d$, whereas fixed Lipschitz sampling uses
 \[
-p_j=\frac{L_j}{\sum_k L_k}.
+r=Xw-y,
 \]
-Both gradient-gain variants use
+
+the coordinate gradient and coordinate smoothness are
+
 \begin{equation}
-p_j=
+g_j=X_j^\top r+\lambda w_j,
+\qquad
+L_j=\|X_j\|_2^2+\lambda.
+\label{eq:grad-lipschitz}
+\end{equation}
+
+Every method uses the same exact coordinate-minimization update,
+
+\begin{equation}
+w_j
+\leftarrow
+w_j-\frac{g_j}{L_j},
+\label{eq:coordinate-update}
+\end{equation}
+
+with the residual updated incrementally.
+
+Uniform sampling uses
+
+\[
+p_j=\frac{1}{d},
+\]
+
+whereas fixed Lipschitz sampling uses
+
+\[
+p_j
+=
+\frac{L_j}{\sum_k L_k}.
+\]
+
+The two baseline gradient-gain variants use
+
+\begin{equation}
+p_j
+=
 \frac{0.05}{d}
 +
 0.95
-\frac{g_j^2/L_j}{\sum_k g_k^2/L_k},
+\frac{g_j^2/L_j}
+{\sum_k g_k^2/L_k},
+\label{eq:gain-probability}
 \end{equation}
+
 with uniform fallback when the denominator vanishes.
 
 Scheduled gain refreshes initially and every 60 updates. Triggered gain
@@ -122,31 +191,46 @@ refreshes at step zero and subsequently at a 120-step checkpoint if the
 latest objective decrease is below half the preceding decrease, subject
 to a 60-step minimum interval.
 
-The four synthetic cases cross balanced versus geometrically scaled
-features with independent versus eight-group correlated features, with
-$n=400$ and $d=48$. The packaged diabetes design provides a fifth case.
+The initial frozen benchmark contains four synthetic cases crossing
+balanced versus geometrically scaled features with independent versus
+eight-group correlated features. The synthetic cases use
+$n=400$ and $d=48$. The packaged diabetes regression design provides
+one additional real-data case.
 
-Each method uses 12 problem seeds and at most 2,400 coordinate updates.
-A dense ridge solve defines $f^\ast$ for evaluation. A run succeeds if a
-saved checkpoint satisfies
+Each baseline method uses 12 problem seeds, initializes at $w=0$, and
+runs for at most 2,400 coordinate updates. A dense ridge solve defines
+$f^\star$ for evaluation only. A baseline run succeeds if a saved
+checkpoint satisfies
+
 \[
-f(w)-f^\ast \leq 10^{-4}.
+f(w)-f^\star\le 10^{-4}.
 \]
 
-The reference optimum is used only for evaluation and not by the
-selection rules.
+For the baseline study, the workload proxy counts modelled coordinate
+update, sampling, refresh, and evaluation operations. These units are
+bookkeeping quantities rather than measured floating-point-operation
+counts.
 
 
+% =============================================================================
 \section{Baseline results}
+% =============================================================================
 
-\begin{table}[ht]
+Table~\ref{tab:baseline-success} reports the original baseline success
+counts.
+
+\begin{table}[!htbp]
 \centering
 \caption{Baseline runs reaching the target within the 2,400-update
-budget (out of 12).}
+budget, out of 12.}
 \label{tab:baseline-success}
 \begin{tabular}{lrrrr}
 \toprule
-Case & Uniform & Lipschitz & Scheduled & Triggered \\
+Case
+& Uniform
+& Lipschitz
+& Scheduled
+& Triggered \\
 \midrule
 Balanced independent & 12 & 12 & 12 & 12 \\
 Scaled independent   & 12 &  0 & 12 & 12 \\
@@ -157,205 +241,343 @@ Diabetes             & 12 & 12 &  9 &  5 \\
 \end{tabular}
 \end{table}
 
-Uniform and fixed Lipschitz sampling both succeed in all runs of the
-balanced-independent, balanced-correlated, and diabetes cases. Lipschitz
-sampling fails on the scaled-independent case, where the other three
-baseline methods succeed. The two gradient-gain heuristics fail to reach
-the target in either correlated synthetic case within the update budget.
+Uniform and fixed Lipschitz sampling succeed in all runs of the
+balanced-independent, balanced-correlated, and diabetes cases.
+Lipschitz sampling fails on the scaled-independent case, where the
+other three baseline methods succeed. Both gradient-gain heuristics fail
+to reach the target on either correlated synthetic design within the
+declared budget.
 
-\begin{figure}[ht]
+The baseline therefore does not provide evidence that the simple
+gradient-gain refresh mechanisms offer a consistent advantage.
+
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=\linewidth]{../results/median_trajectories.png}
-\caption{Median objective gaps for the two balanced baseline cases.
-The horizontal dotted line marks the $10^{-4}$ target. A median trajectory
-does not display variability across individual runs.}
+\includegraphics[
+    width=0.88\textwidth
+]{../results/median_trajectories.png}
+\caption{
+Median objective-gap trajectories for the balanced baseline cases.
+The horizontal target is $10^{-4}$. Median trajectories summarize
+central behavior and do not show the full variation across individual
+runs.
+}
 \label{fig:baseline-trajectories}
 \end{figure}
 
+\FloatBarrier
 
+
+% =============================================================================
 \section{Published ASCD comparison}
+% =============================================================================
 
 \subsection{Selection rule}
 
-ASCD \cite{stich2017} maintains, for each coordinate $j$, an estimated
-gradient $\widetilde g_j$ and certified radius $r_j$ satisfying
-\[
-|g_j-\widetilde g_j|\leq r_j.
-\]
+ASCD \cite{stich2017} maintains, for each coordinate $j$, a stored
+gradient estimate $\widetilde g_j$ and certified radius $r_j$ satisfying
 
-The corresponding upper and lower bounds are
 \begin{equation}
-u_j=|\widetilde g_j|+r_j,
-\qquad
-\ell_j=\max\{0,|\widetilde g_j|-r_j\}.
+|g_j-\widetilde g_j|
+\le r_j.
+\label{eq:interval}
 \end{equation}
 
-The active set is the smallest nonempty subset $I$ such that every
+The corresponding upper and lower magnitude bounds are
+
+\begin{equation}
+u_j
+=
+|\widetilde g_j|+r_j,
+\qquad
+\ell_j
+=
+\max\{0,|\widetilde g_j|-r_j\}.
+\label{eq:upper-lower}
+\end{equation}
+
+The active set is the smallest nonempty set $I$ such that every
 excluded coordinate satisfies
+
 \begin{equation}
 u_j^2
 <
 \frac{1}{|I|}
 \sum_{i\in I}\ell_i^2.
+\label{eq:active-set}
 \end{equation}
 
-Equality therefore does not permit exclusion. A coordinate is drawn
-uniformly from members of $I$ attaining the largest lower bound.
+The exclusion inequality is strict; equality therefore retains the
+coordinate. Selection is uniform among active coordinates attaining the
+largest lower bound.
 
-Our implementation initializes $\widetilde g$ with the exact full gradient
-and all radii at zero.
+Our Stage~3 implementation initializes $\widetilde g$ with the exact
+full gradient and initializes all radii to zero.
 
 
 \subsection{Zero oracle}
 
-For the Stage 3 comparison, the paper's zero cross-coordinate oracle is
-used. If coordinate $i$ changes by $h$, then for $j\neq i$
+For Stage~3, the paper's zero cross-coordinate oracle $g^3$ is used.
+If coordinate $i$ changes by $h$, then for $j\ne i$,
+
 \begin{equation}
 g_j^{\mathrm{new}}-g_j
 =
-hX_j^{\mathsf T}X_i.
+hX_j^\top X_i.
 \end{equation}
 
 Cauchy--Schwarz gives
+
 \begin{equation}
 |g_j^{\mathrm{new}}-g_j|
-\leq
-|h|\,\lVert X_j\rVert_2\,\lVert X_i\rVert_2.
+\le
+|h|\,\|X_i\|_2\|X_j\|_2.
+\label{eq:zero-oracle-radius}
 \end{equation}
 
-The stored cross-gradient estimate is therefore unchanged and its
-certified radius is increased by this bound.
+The stored passive-coordinate estimate is left unchanged and its radius
+is increased by this certified bound.
 
 For the selected coordinate,
+
 \[
 h=-\frac{g_i}{L_i},
 \]
-and exact minimization gives
+
+so exact coordinate minimization gives
+
 \[
-g_i^{\mathrm{new}}=g_i+hL_i=0.
+g_i^{\mathrm{new}}
+=
+g_i+hL_i
+=
+0
 \]
 
-The selected estimate and radius can therefore be reset to zero up to
-numerical precision.
+up to floating-point precision. Its stored estimate and radius can
+therefore be reset to zero.
 
 
-\subsection{Initial ASCD results}
+\subsection{Implementation verification}
 
-\begin{table}[ht]
+The implementation includes a numerical audit on a small dense ridge
+problem. After each audited update it recomputes
+
+\[
+X^\top(Xw-y)+\lambda w
+\]
+
+and verifies containment of every true coordinate gradient inside the
+maintained interval. The residual invariant
+
+\[
+r=Xw-y
+\]
+
+is also checked.
+
+The strict active-set rule is tested separately, including its equality
+boundary, and the audited exact coordinate updates are required to be
+nonincreasing in objective value.
+
+
+\subsection{ASCD results}
+
+Stage~3 uses the same five frozen cases, 12 problem seeds, initial point,
+objective, $10^{-4}$ target, checkpoint spacing, and 2,400-update budget
+as the baseline.
+
+\begin{table}[!htbp]
 \centering
-\caption{Uniform and zero-oracle ASCD results on the frozen benchmark.
-Work to target is the median among successful runs under each method's
-recorded proxy.}
-\label{tab:ascd-results}
-\begin{tabular}{lrrrrr}
+\caption{
+Uniform and zero-oracle ASCD results on the frozen benchmark.
+Work is the median recorded proxy work to target among successful runs.
+}
+\label{tab:stage3-results}
+\small
+\begin{tabular}{lrrrcr}
 \toprule
-Case &
-\multicolumn{2}{c}{Uniform} &
-\multicolumn{3}{c}{ASCD} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-6}
-&
-Success &
-Work &
-Success &
-Work &
-Median $|I|$ \\
+& \multicolumn{2}{c}{Uniform}
+& \multicolumn{3}{c}{ASCD $g^3$} \\
+\cmidrule(lr){2-3}
+\cmidrule(lr){4-6}
+Case
+& Success
+& Work
+& Success
+& Work
+& Median $|I|$ \\
 \midrule
-Balanced independent & 12/12 & 513,288   & 12/12 & 762,936   & 48 \\
-Scaled independent   & 12/12 & 513,288   & 12/12 & 762,936   & 48 \\
-Balanced correlated  & 12/12 & 1,641,536 & 12/12 & 2,249,416 & 48 \\
-Scaled correlated    &  6/12 & 1,897,956 &  9/12 & 2,844,008 & 48 \\
-Diabetes             & 12/12 & 919,234   & 12/12 & 984,864   & 10 \\
+Balanced independent
+& 12/12 & 513,288
+& 12/12 & 762,936
+& 48 \\
+
+Scaled independent
+& 12/12 & 513,288
+& 12/12 & 762,936
+& 48 \\
+
+Balanced correlated
+& 12/12 & 1,641,536
+& 12/12 & 2,249,416
+& 48 \\
+
+Scaled correlated
+& 6/12 & 1,897,956
+& 9/12 & 2,844,008
+& 48 \\
+
+Diabetes
+& 12/12 & 919,234
+& 12/12 & 984,864
+& 10 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The scaled-correlated case motivates a paired comparison because the
-successful-run medians use different seed sets.
+Zero-oracle ASCD therefore improves the success count on the
+scaled-correlated case from 6/12 to 9/12. However, the successful-run
+work medians in that row use different success sets and cannot by
+themselves establish a paired cost difference.
 
-The two methods both reach the target on seeds
-$0,4,5,6,$ and $10$. On those five shared successes, median recorded work
-to target is 1,846,672 for uniform and 2,844,008 for ASCD. The median
-paired ASCD-minus-uniform difference is 997,336 proxy units and the median
-recorded-work ratio is 1.5401. ASCD records greater proxy work on all five
-shared successes.
+A later paired analysis identifies five scaled-correlated seeds on which
+both uniform and ASCD reach the target. On all five shared successes,
+ASCD records greater proxy work. The median paired recorded-work ratio
 
-These proxy values are descriptive rather than exact FLOP or wall-clock
-comparisons because the two implementations do not have fully harmonized
-setup boundaries.
+\[
+\frac{\text{ASCD work}}{\text{uniform work}}
+\]
+
+is approximately $1.5401$.
+
+The active-set result is also important. The median active set is the
+entire coordinate dimension on every case: 48 coordinates on each
+synthetic problem and 10 coordinates on diabetes. Thus the zero-oracle
+mechanism provides almost no observed pruning under this configuration.
 
 
-\section{Stage 4: oracle-quality mechanism analysis}
+\subsection{Stage 3 work accounting}
 
-\subsection{Zero-oracle diagnosis}
+The Stage~3 ASCD accounting includes an initial full-gradient charge of
 
-The Stage 3 median active set alone does not reveal whether the active set
-is usually large or merely has a large median. Stage 4 therefore replays
-the frozen zero-oracle trajectory while recording per-update bound and
-active-set diagnostics.
+\[
+nd+d.
+\]
 
-The replay validates every saved Stage 3 checkpoint and reproduces the
-frozen objective gaps and proxy work.
+Each saved objective checkpoint adds $n+d$. Each coordinate update adds
 
-For the four synthetic cases, the full 48-coordinate active set is used
-on approximately 99.94\% of recorded updates. On diabetes, the full
-10-coordinate set is used on approximately 99.96\% of updates. The
-median fraction of coordinates with zero lower bound is 1.0000 for every
-case.
+\[
+2n+3
++
+d\left\lceil\log_2d\right\rceil
++
+3d,
+\]
+
+representing the coordinate update, modelled active-set computation, and
+interval maintenance.
+
+These are approximate bookkeeping units rather than exact FLOP counts.
+Stage~3 baseline and ASCD timer boundaries were not fully harmonized, so
+the recorded wall times from that stage are not used as controlled
+method comparisons.
+
+
+% =============================================================================
+\section{Stage 4: oracle-quality and active-set mechanism analysis}
+% =============================================================================
+
+\subsection{Why does the zero-oracle active set remain full?}
+
+Stage~4 first replays the frozen Stage~3 zero-oracle trajectory while
+recording per-update active-set and interval diagnostics. The replay
+reproduces the frozen Stage~3 objective checkpoints and proxy work.
+
+For the four 48-coordinate synthetic cases, the full active set is used
+on approximately $99.94\%$ of updates. On diabetes, the full
+10-coordinate active set is used on approximately $99.96\%$ of updates.
+
+The median fraction of coordinates with zero certified lower bound is
+one on every case.
 
 Since
+
 \[
-\ell_j=\max\{0,|\widetilde g_j|-r_j\},
+\ell_j
+=
+\max\{0,|\widetilde g_j|-r_j\},
 \]
-a zero lower bound occurs when the certified radius dominates the stored
-estimate. If all lower bounds are zero, then
+
+a lower bound becomes zero whenever the certified radius is at least as
+large as the stored estimate magnitude. If all lower bounds are zero,
+
 \[
 \frac{1}{|I|}
-\sum_{i\in I}\ell_i^2=0,
+\sum_{i\in I}\ell_i^2
+=
+0.
 \]
-so no coordinate can satisfy the strict safe-exclusion condition
-$u_j^2<0$.
 
-The diagnostic radius trajectories are consistent with this mechanism:
-the certified radius generally remains above the typical true-gradient
-scale.
+The strict exclusion condition in
+Equation~\eqref{eq:active-set} would then require
+
+\[
+u_j^2<0,
+\]
+
+which is impossible. The observed radius trajectories are consistent
+with this mechanism: zero-oracle uncertainty typically dominates the
+stored gradient information.
 
 
 \subsection{Oracle-quality experiment}
 
-Phase B retains the frozen benchmark and coordinate update while changing
-the oracle information.
+Phase~B retains the same frozen benchmark and exact coordinate update
+while varying the gradient oracle.
 
-We compare:
+The configurations are
 
-\begin{itemize}
-\item the zero oracle $g^3$;
-\item simulated approximate oracles $g^2$ with
-$\epsilon\in\{1,0.5,0.25,0.125\}$;
-\item the exact inner-product oracle $g^1$.
-\end{itemize}
+\[
+g^3,
+\qquad
+g^2(\epsilon),
+\quad
+\epsilon\in
+\{1,0.5,0.25,0.125\},
+\qquad
+g^1.
+\]
 
-The simulated $g^2$ runs isolate oracle-quality effects only. They do not
-implement or cost a practical embedding or approximation-acquisition
-mechanism.
+Here $g^1$ is the exact inner-product oracle. The simulated $g^2$
+configurations use certified error
 
-The $g^3$ configuration reproduces the frozen Stage 3 trajectory.
+\[
+\delta_{ij}
+=
+\epsilon\|X_i\|_2\|X_j\|_2.
+\]
 
+The simulated $g^2$ experiment isolates oracle-quality effects. It does
+not model or charge a practical approximation-acquisition mechanism.
 
-\begin{table}[ht]
+\begin{table}[!htbp]
 \centering
+\caption{
+Stage~4 oracle-quality runs reaching the target within 2,400 updates,
+out of 12.
+}
+\label{tab:stage4-success}
 \small
-\caption{Phase B runs reaching the target within 2,400 updates
-(out of 12).}
-\label{tab:oracle-success}
 \begin{tabular}{lrrrrrr}
 \toprule
-Case &
-$g^3$ &
-$g^2(1)$ &
-$g^2(0.5)$ &
-$g^2(0.25)$ &
-$g^2(0.125)$ &
-$g^1$ \\
+Case
+& $g^3$
+& $g^2(1)$
+& $g^2(.5)$
+& $g^2(.25)$
+& $g^2(.125)$
+& $g^1$ \\
 \midrule
 Balanced independent & 12 & 12 & 0 & 0 & 0 & 12 \\
 Scaled independent   & 12 & 12 & 0 & 0 & 0 & 12 \\
@@ -369,29 +591,32 @@ Diabetes             & 12 & 12 & 0 & 0 & 0 & 12 \\
 
 \subsection{Active-set transition}
 
-The exact oracle produces a qualitatively different selection regime.
+The exact oracle produces a qualitatively different active-set regime.
 
-For $g^1$, the median active set is one coordinate on every case, and
-the 10th, 25th, 50th, 75th, and 90th active-set percentiles are all one.
-In contrast, $g^3$ and simulated $g^2$ with $\epsilon=1$ retain the full
-coordinate dimension as their median active set.
+For $g^1$, the median active set is one coordinate on every Stage~4
+case, and the 10th, 25th, 50th, 75th, and 90th active-set percentiles are
+all one. By contrast, $g^3$ and $g^2(1)$ retain an effectively full
+active set.
 
-The intermediate simulated $g^2$ configurations technically prune on
-almost every update, but only weakly: their synthetic median active set
-is 47 of 48 coordinates, and the diabetes median is 9 of 10 coordinates.
+The intermediate simulated $g^2$ configurations do prune frequently,
+but only weakly: the median synthetic active set is 47 of 48 coordinates
+and the diabetes median is 9 of 10 coordinates.
 
-Thus the tested approximate precision levels do not provide a useful
-middle regime between the zero and exact oracles.
+Thus the tested precision grid does not provide a useful intermediate
+regime between zero-oracle uncertainty and exact information.
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\linewidth]{
-../results/stage4_oracle_analysis/oracle_active_set_comparison.png}
-\caption{Median active-set fraction across the Phase B oracle-quality
-configurations. Exact $g^1$ produces an effectively one-coordinate active
-set, whereas the tested nonzero-error configurations remain close to the
-full coordinate set.}
-\label{fig:oracle-active}
+\includegraphics[
+    width=0.92\textwidth
+]{../results/stage4_oracle_analysis/oracle_active_set_comparison.png}
+\caption{
+Stage~4 median active-set fraction across the oracle-quality
+configurations. Exact $g^1$ produces a one-coordinate active set,
+whereas the tested nonzero-error configurations remain close to the full
+coordinate set.
+}
+\label{fig:stage4-active-set}
 \end{figure}
 
 \FloatBarrier
@@ -399,220 +624,742 @@ full coordinate set.}
 
 \subsection{Optimization behavior}
 
-The objective-gap trajectories show the same qualitative separation.
+The objective-gap trajectories show a similarly sharp separation.
+Exact $g^1$ reaches the Stage~4 target on every run. The
+$\epsilon=1$ simulated configuration largely resembles the zero oracle.
 
-Exact $g^1$ reaches the target in every run and converges substantially
-faster in coordinate updates. The simulated $\epsilon=1$ configuration
-largely resembles the zero oracle. The intermediate simulated
-configurations with $\epsilon\in\{0.5,0.25,0.125\}$ do not reach the target
-in any run.
+The tested $\epsilon\in\{0.5,0.25,0.125\}$ configurations do not reach
+the target on any Stage~4 run.
 
-This non-monotonic behavior should be interpreted narrowly. Changing the
-approximate oracle changes both the maintained gradient estimates and the
-coordinate-selection trajectory. The experiment therefore does not show
-that tighter approximate oracles are generally harmful; it shows that the
-tested simulated configurations do not produce a successful intermediate
-regime under this benchmark.
+This nonmonotonic behavior should be interpreted narrowly. Changing the
+approximate oracle changes both the maintained estimates and the
+resulting coordinate-selection path. The result does not establish that
+a more accurate approximate oracle is generally harmful; rather, the
+tested simulated settings fail to produce a useful middle regime on
+this frozen benchmark.
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\linewidth]{
-../results/stage4_oracle_analysis/oracle_gap_trajectories.png}
-\caption{Median objective-gap trajectories for the Phase B oracle-quality
-comparison. The dotted line marks the $10^{-4}$ target.}
-\label{fig:oracle-gaps}
+\includegraphics[
+    width=0.92\textwidth
+]{../results/stage4_oracle_analysis/oracle_gap_trajectories.png}
+\caption{
+Stage~4 oracle-quality objective-gap trajectories. The exact oracle
+separates strongly from the zero oracle, whereas the tested approximate
+settings do not provide a successful intermediate regime.
+}
+\label{fig:stage4-gaps}
 \end{figure}
 
 \FloatBarrier
 
 
-\subsection{Does exact oracle information pay for itself?}
+\subsection{Does exact information pay for itself under the Stage 4 proxy?}
 
-The common ASCD core proxy does not include the cost of obtaining an exact
-Gram matrix. For $g^1$, Stage 4 therefore adds a separate dense setup
-charge
+For $g^1$, Stage~4 adds a dense Gram acquisition charge
+
 \[
-nd^2.
+nd^2
 \]
 
-For the synthetic cases this is
-\[
-400\cdot48^2=921{,}600,
-\]
-and for diabetes it is
-\[
-442\cdot10^2=44{,}200.
-\]
+rather than treating exact inner products as free.
 
-\begin{table}[ht]
+Table~\ref{tab:stage4-cost} reports the corresponding costed comparison.
+
+\begin{table}[!htbp]
 \centering
+\caption{
+Stage~4 costed zero-oracle and exact-oracle comparison.
+The ratio is the median paired $g^1/g^3$ recorded-work ratio on
+shared successful runs.
+}
+\label{tab:stage4-cost}
 \small
-\caption{Costed zero-oracle and exact-oracle comparison. The final column
-is the median paired $g^1/g^3$ recorded-work ratio on shared successful
-seeds.}
-\label{tab:g1-cost}
 \begin{tabular}{lrrrrr}
 \toprule
-Case &
-$g^3$ success &
-$g^1$ success &
-$g^3$ work &
-$g^1$ work &
-Paired ratio \\
+Case
+& $g^3$ succ.
+& $g^1$ succ.
+& $g^3$ work
+& $g^1$ work
+& Paired ratio \\
 \midrule
-Balanced independent & 12/12 & 12/12 & 762,936   & 1,238,592 & 1.6235 \\
-Scaled independent   & 12/12 & 12/12 & 762,936   & 1,238,592 & 1.6235 \\
-Balanced correlated  & 12/12 & 12/12 & 2,249,416 & 1,684,536 & 0.7489 \\
-Scaled correlated    &  9/12 & 12/12 & 2,844,008 & 2,427,776 & 0.8536 \\
-Diabetes             & 12/12 & 12/12 & 984,864   & 164,374   & 0.1675 \\
+Balanced independent
+& 12/12 & 12/12 & 762,936 & 1,238,592 & 1.6235 \\
+
+Scaled independent
+& 12/12 & 12/12 & 762,936 & 1,238,592 & 1.6235 \\
+
+Balanced correlated
+& 12/12 & 12/12 & 2,249,416 & 1,684,536 & 0.7489 \\
+
+Scaled correlated
+& 9/12 & 12/12 & 2,844,008 & 2,427,776 & 0.8536 \\
+
+Diabetes
+& 12/12 & 12/12 & 984,864 & 164,374 & 0.1675 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The exact oracle therefore does not have a uniform cost advantage.
+Exact information therefore does not have a uniform Stage~4 proxy-cost
+advantage. It is more expensive on the two independent synthetic cases,
+but cheaper on the correlated cases and diabetes under this accounting
+model.
 
-It is more expensive under the modelled proxy on the two independent
-synthetic cases. It is cheaper on balanced-correlated, cheaper on the
-shared scaled-correlated successes while also succeeding on three
-additional seeds, and substantially cheaper on diabetes.
+These are proxy-accounting results, not controlled measured-runtime
+ratios.
 
-These are accounting-model results rather than measured FLOP or
-wall-clock ratios.
 
+% =============================================================================
+\section{Stage 5: confirmatory robustness and runtime validation}
+% =============================================================================
+
+\subsection{Predeclared held-out protocol}
+
+Stage~5 tests whether the Stage~4 mechanism persists outside the
+development benchmark.
+
+The primary confirmatory question is:
+
+\begin{quote}
+Do the Stage~4 conclusions about oracle uncertainty, active-set pruning,
+and the cost of exact information persist on held-out synthetic
+structures and additional real regression datasets under harmonized
+runtime accounting?
+\end{quote}
+
+Only four primary methods are retained:
+
+\begin{itemize}
+    \item uniform coordinate sampling;
+    \item fixed Lipschitz sampling;
+    \item zero-oracle ASCD $g^3$;
+    \item exact-inner-product ASCD $g^1$.
+\end{itemize}
+
+The unsuccessful simulated Stage~4 $g^2$ precision grid is not included
+in the primary confirmatory study.
+
+The held-out synthetic generator is deliberately different from the
+development generator. It uses
+
+\[
+n=800,
+\qquad
+d=96,
+\]
+
+with Toeplitz covariance
+
+\begin{equation}
+\Sigma_{ij}
+=
+\rho^{|i-j|},
+\qquad
+\rho\in\{0.6,0.9\}.
+\label{eq:toeplitz}
+\end{equation}
+
+Balanced and geometrically scaled versions of each correlation level
+produce four held-out synthetic families. Scaled designs use
+
+\[
+\operatorname{logspace}(-1.5,1.5,d).
+\]
+
+Twelve problem seeds, 100 through 111, are used.
+
+Four additional real regression datasets are included:
+California Housing, Concrete Compressive Strength, Airfoil Self-Noise,
+and Residential Building. After the fixed 80/20 split and training-only
+standardization, the corresponding training dimensions are
+
+\[
+16512\times 8,\quad
+824\times 8,\quad
+1202\times 5,\quad
+297\times 107.
+\]
+
+For Residential Building, the sale-price output $V$-9 is the response;
+the second output $V$-10 is excluded from the design. Repeated economic
+variables are identified by their five source time lags.
+
+Because Stage~5 spans substantially different sample sizes and scales,
+the primary convergence measure is the normalized objective gap
+
+\begin{equation}
+R_t
+=
+\frac{f(w_t)-f^\star}
+{\max\{f(w_0)-f^\star,10^{-30}\}}.
+\label{eq:relative-gap}
+\end{equation}
+
+The primary target is
+
+\[
+R_t\le10^{-6},
+\]
+
+and the secondary target is
+
+\[
+R_t\le10^{-4}.
+\]
+
+The maximum optimization budget is
+
+\[
+200d
+\]
+
+coordinate updates, i.e.\ 200 coordinate epochs, with checkpoints every
+$5d$ updates.
+
+For timing, each method/problem pair receives one untimed warm-up and
+three timed repetitions. The timing boundary begins before
+method-specific setup and includes coordinate selection, updates,
+internal ASCD maintenance, and the exact Gram acquisition for $g^1$.
+Checkpoint evaluation and the dense evaluation optimum are excluded from
+the primary method timer. Numerical kernels are constrained to one BLAS
+thread.
+
+
+\subsection{Primary success results}
+
+Table~\ref{tab:stage5-success} reports the primary-target success counts.
+
+\begin{table}[!htbp]
+\centering
+\caption{
+Stage~5 runs reaching the primary normalized-gap target
+$R_t\le10^{-6}$ within 200 coordinate epochs, out of 12.
+}
+\label{tab:stage5-success}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Problem family
+& Uniform
+& Lipschitz
+& $g^3$
+& $g^1$ \\
+\midrule
+Balanced, $\rho=0.6$ & 12 & 12 & 12 & 12 \\
+Balanced, $\rho=0.9$ & 12 & 12 & 12 & 12 \\
+Scaled, $\rho=0.6$   & 12 &  0 & 12 & 12 \\
+Scaled, $\rho=0.9$   & 12 &  0 & 12 &  9 \\
+California Housing   & 12 & 12 & 12 & 12 \\
+Concrete Strength    & 12 & 12 & 12 & 12 \\
+Airfoil Self-Noise   & 12 & 12 & 12 & 12 \\
+Residential Building &  0 &  0 &  0 &  0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Several results are important.
+
+On both balanced held-out synthetic families, all four methods reach the
+primary target.
+
+On both scaled held-out families, fixed Lipschitz sampling fails in all
+12 runs. Uniform and zero-oracle ASCD reach the target in every run.
+Exact $g^1$ reaches it in all 12 moderate-correlation scaled runs but in
+only 9 of 12 strongly correlated scaled runs.
+
+On California Housing, Concrete, and Airfoil, every method reaches the
+primary target in all 12 algorithmic runs.
+
+Residential Building is a useful negative case: no method reaches the
+primary $10^{-6}$ target within the declared budget. Exact $g^1$ does,
+however, reach the secondary $10^{-4}$ target in all 12 runs, with a
+median final normalized gap of approximately
+$7.45\times10^{-5}$.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[
+    width=0.98\textwidth
+]{../results/stage5_confirmatory/heldout_gap_trajectories.png}
+\caption{
+Stage~5 held-out synthetic normalized objective-gap trajectories.
+Curves are medians across the 12 paired problem instances and shading is
+the interquartile range. The horizontal dotted lines mark the secondary
+$10^{-4}$ and primary $10^{-6}$ targets.
+}
+\label{fig:stage5-synthetic-trajectories}
+\end{figure}
 
 \FloatBarrier
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[
+    width=0.98\textwidth
+]{../results/stage5_confirmatory/real_gap_trajectories.png}
+\caption{
+Stage~5 real-data normalized objective-gap trajectories.
+The fixed split is shared across methods, while the 12 repetitions use
+the predeclared algorithm seeds.
+}
+\label{fig:stage5-real-trajectories}
+\end{figure}
+
+\FloatBarrier
+
+
+\subsection{Does the Stage 4 active-set mechanism generalize?}
+
+The confirmatory mechanism result is unusually consistent.
+
+For zero-oracle $g^3$, the median active-set fraction is 1.0 on every
+one of the eight Stage~5 problem families. The median fraction of
+coordinates with zero certified lower bound is likewise 1.0 on all
+eight.
+
+Exact $g^1$, by contrast, has a median active-set size of one coordinate
+on every problem family. Consequently its median active-set fraction is
+
+\[
+\frac{1}{96}\approx0.0104
+\]
+
+on the held-out synthetic families,
+
+\[
+\frac18=0.125
+\]
+
+on California and Concrete,
+
+\[
+\frac15=0.2
+\]
+
+on Airfoil, and
+
+\[
+\frac1{107}\approx0.00935
+\]
+
+on Residential Building.
+
+Table~\ref{tab:stage5-mechanism} summarizes this contrast.
+
+\begin{table}[!htbp]
+\centering
+\caption{
+Stage~5 median ASCD active-set and zero-lower-bound fractions.
+}
+\label{tab:stage5-mechanism}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+& \multicolumn{2}{c}{Active-set fraction}
+& \multicolumn{2}{c}{Zero-lower fraction} \\
+\cmidrule(lr){2-3}
+\cmidrule(lr){4-5}
+Problem family
+& $g^3$
+& $g^1$
+& $g^3$
+& $g^1$ \\
+\midrule
+Balanced, $\rho=0.6$ & 1.000 & 0.0104 & 1.000 & 0.0104 \\
+Balanced, $\rho=0.9$ & 1.000 & 0.0104 & 1.000 & 0.0104 \\
+Scaled, $\rho=0.6$   & 1.000 & 0.0104 & 1.000 & 0.0104 \\
+Scaled, $\rho=0.9$   & 1.000 & 0.0104 & 1.000 & 0.0104 \\
+California Housing   & 1.000 & 0.1250 & 1.000 & 0.1250 \\
+Concrete Strength    & 1.000 & 0.1250 & 1.000 & 0.1250 \\
+Airfoil Self-Noise   & 1.000 & 0.2000 & 1.000 & 0.2000 \\
+Residential Building & 1.000 & 0.00935& 1.000 & 0.00935\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Thus the predeclared Stage~5 mechanism criterion is met on all eight
+problem families, rather than merely on the required majority.
+
+The Stage~4 explanation therefore survives the held-out experiment:
+zero-oracle uncertainty repeatedly collapses the lower bounds and leaves
+the safe active set effectively unpruned, whereas exact oracle
+information produces one-coordinate selection.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[
+    width=0.98\textwidth
+]{../results/stage5_confirmatory/active_set_generalization.png}
+\caption{
+Stage~5 ASCD mechanism generalization. Zero-oracle $g^3$ retains the
+full active set and exhibits complete lower-bound collapse, whereas
+exact $g^1$ produces an effectively one-coordinate active set on every
+held-out family.
+}
+\label{fig:stage5-active-set}
+\end{figure}
+
+\FloatBarrier
+
+
+\subsection{Coordinate effort and harmonized runtime}
+
+Table~\ref{tab:stage5-runtime} compares exact and zero-oracle ASCD on
+their shared primary successes.
+
+The epoch ratio is
+
+\[
+\frac{\text{$g^1$ coordinate epochs to target}}
+{\text{$g^3$ coordinate epochs to target}},
+\]
+
+and the runtime ratio uses the corresponding harmonized measured time.
+Reported runtime intervals are percentile 95\% confidence intervals from
+10,000 paired bootstrap resamples.
+
+\begin{table}[!htbp]
+\centering
+\caption{
+Paired Stage~5 $g^1/g^3$ comparisons on shared primary successes.
+Runtime ratios below one favor $g^1$ under the measured implementation.
+}
+\label{tab:stage5-runtime}
+\scriptsize
+\begin{tabular}{lrrrr}
+\toprule
+Problem family
+& $g^3$ succ.
+& $g^1$ succ.
+& Epoch ratio
+& Runtime ratio [95\% CI] \\
+\midrule
+Balanced, $\rho=0.6$
+& 12/12 & 12/12
+& 0.3095
+& 0.8179 [0.6954, 0.9811] \\
+
+Balanced, $\rho=0.9$
+& 12/12 & 12/12
+& 0.3191
+& 0.8389 [0.7417, 0.9123] \\
+
+Scaled, $\rho=0.6$
+& 12/12 & 12/12
+& 1.4286
+& 3.2393 [2.6883, 4.2613] \\
+
+Scaled, $\rho=0.9$
+& 12/12 & 9/12
+& 1.2593
+& 3.1274 [2.1715, 3.3162] \\
+
+California Housing
+& 12/12 & 12/12
+& 0.2273
+& 0.2080 [0.1859, 0.2802] \\
+
+Concrete Strength
+& 12/12 & 12/12
+& 0.4138
+& 0.3779 [0.3655, 0.4520] \\
+
+Airfoil Self-Noise
+& 12/12 & 12/12
+& 0.5000
+& 0.5132 [0.3836, 0.6628] \\
+
+Residential Building
+& 0/12 & 0/12
+& -- & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The timing result is therefore mixed rather than monotone.
+
+Exact information is faster than zero-oracle ASCD in paired median time
+to the primary target on the two balanced synthetic families and on
+California, Concrete, and Airfoil.
+
+It is substantially slower on both scaled synthetic families. On the
+moderately correlated scaled family, the paired median runtime ratio is
+approximately 3.24. On the strongly correlated scaled family it is
+approximately 3.13 among the nine shared successes, and $g^1$ also
+fails on three instances on which $g^3$ succeeds.
+
+The predeclared criterion that exact information can
+\emph{sometimes} pay for itself is therefore met, but the stronger claim
+that exact information is generally preferable is not supported.
+
+This Stage~5 result also improves on the earlier accounting-only
+comparison because the runtime boundary is harmonized and the exact Gram
+construction is inside the $g^1$ timer.
+
+
+\subsection{Real-data predictive diagnostics}
+
+Stage~5 remains an optimization experiment rather than a predictive
+machine-learning model-selection study.
+
+All four methods optimize the same training ridge objective. Test RMSE
+is therefore recorded only as a secondary diagnostic of the final
+iterates.
+
+On California, Concrete, and Airfoil, the methods that converge tightly
+to the ridge optimum also produce test RMSE values numerically very close
+to the dense reference solution.
+
+Residential Building illustrates why these RMSE values should not be
+used to rank the optimization methods. None of the methods reaches the
+primary optimization target, and some incompletely optimized iterates
+obtain lower test RMSE than the exact training optimum. For example, the
+median final $g^3$ test RMSE is below the dense ridge reference test
+RMSE even though $g^3$ has a substantially larger training objective
+gap. This is possible because minimizing the fixed training objective is
+not equivalent to minimizing test RMSE.
+
+Accordingly, Stage~5 does not interpret test RMSE differences as an
+optimization-method superiority result.
+
+
+\subsection{Predeclared confirmatory decisions}
+
+The Stage~5 protocol specified four mechanism and cost questions.
+
+The resulting decisions are as follows.
+
+\begin{enumerate}
+    \item
+    \textbf{Zero-oracle pruning failure.}
+    The median $g^3$ active-set fraction exceeds the $g^1$ fraction on
+    all eight problem families, exceeding the predeclared majority
+    requirement.
+
+    \item
+    \textbf{Exact-information pruning.}
+    Exact $g^1$ reduces the median active set to one coordinate on every
+    family. It also uses fewer paired median coordinate epochs than
+    $g^3$ on the two balanced synthetic families and on California,
+    Concrete, and Airfoil.
+
+    \item
+    \textbf{Regime-dependent information cost.}
+    The paired median runtime ratio is below one on five families and
+    above one on both scaled synthetic families. Residential has no
+    shared primary success and therefore no time-to-target ratio.
+
+    \item
+    \textbf{Generalization of the Stage~4 mechanism.}
+    Both the active-set and zero-lower-bound criteria hold on all eight
+    held-out families.
+\end{enumerate}
+
+The predeclared rule that exact information can sometimes pay for itself
+is therefore satisfied. The confirmatory evidence does not support a
+universal exact-oracle advantage.
+
+
+% =============================================================================
 \section{Interpretation and limitations}
+% =============================================================================
 
-The baseline experiment shows that the simple gradient-gain heuristics do
-not succeed consistently across the frozen cases.
+The combined experiments support a narrower and more defensible
+conclusion than a general claim that adaptive coordinate selection is
+better.
 
-The initial zero-oracle ASCD comparison improves scaled-correlated success
-count under a fixed update budget, but does not show lower recorded work
-on shared successful seeds.
+The baseline experiment demonstrates that simple gradient-gain refresh
+heuristics are highly sensitive to problem structure and do not
+consistently improve on fixed sampling.
 
-Stage 4 explains a major part of this behavior. Under the zero oracle,
-certified uncertainty overwhelms the stored estimates sufficiently often
-that almost every lower bound becomes zero. The safe active set is
-therefore effectively full.
+Stage~3 shows that a published ASCD selection mechanism can improve
+success count on one difficult development regime, but that the zero
+oracle retains a full active set and can incur greater recorded work.
 
-Exact oracle information reverses this mechanism completely and produces
-an active set of one coordinate. This improves optimization strongly, but
-the cost of obtaining the exact information determines whether the
-overall proxy improves.
+Stage~4 identifies the mechanism behind that behavior. The
+Cauchy--Schwarz zero-oracle radii are sufficiently broad that certified
+lower bounds collapse to zero on almost all coordinates. The safe
+exclusion test then has essentially no opportunity to prune. Exact
+inner-product information removes that uncertainty and produces a
+one-coordinate active set.
 
-The result is regime-dependent rather than universal.
+Stage~5 provides the strongest evidence for this mechanism because the
+same qualitative effect appears on all four held-out Toeplitz synthetic
+families and all four additional real datasets. The mechanism is
+therefore not confined to the original grouped-correlation synthetic
+generator or the diabetes dataset.
 
-The simulated approximate-oracle experiment has an important limitation:
-it measures oracle quality without implementing a realistic acquisition
-mechanism. Its results therefore cannot answer whether a practical
-approximate inner-product oracle would pay for itself.
+However, aggressive pruning is not equivalent to universal computational
+advantage. On two balanced synthetic families and three real datasets,
+the reduction in coordinate effort is large enough that $g^1$ has a
+lower measured time to the primary target than $g^3$. On both scaled
+synthetic families the direction reverses. In the strongest scaled case,
+$g^1$ also has a lower primary success count.
 
-The tested intermediate precision settings also produce an unusual
-non-monotonic optimization pattern. They should be reported as a result
-of this particular simulation and benchmark rather than generalized.
+Several limitations remain.
 
-Only one small packaged real dataset is included. No predictive
-generalization performance is evaluated. The proxy is not an exact FLOP
-count, and wall-clock measurements depend on software, hardware, and setup
-boundaries.
+First, the experiments concern convex ridge regression with exact
+coordinate minimization. They do not establish the same behavior for
+general smooth objectives, nonconvex machine-learning models, or
+high-dimensional sparse learning problems.
 
-Finally, the ASCD paper's one-step comparison assumes common smoothness
-and update conditions that are not identical to this benchmark, which
-uses coordinate-specific $L_j$ values and its existing exact
-coordinate-minimization rule. The paper's theoretical result should
-therefore not be interpreted as a guarantee for the experiments reported
-here.
+Second, the Stage~5 real datasets broaden the evaluation substantially
+relative to the original diabetes-only benchmark, but four additional
+regression datasets are still a limited empirical sample.
+
+Third, measured runtimes remain implementation- and hardware-dependent.
+Stage~5 improves internal validity through harmonized timing,
+single-threaded numerical kernels, warm-up execution, and repeated
+measurement, but its absolute timing ratios should not be assumed to
+transfer unchanged to other implementations.
+
+Fourth, proxy work remains a modelled accounting quantity rather than
+an exact floating-point-operation count.
+
+Fifth, the exact oracle obtains its information through a dense Gram
+matrix. This is a useful controlled reference point but may be
+impractical for genuinely large $d$. The tested Stage~4 simulated
+approximate oracles do not establish a practical approximate alternative.
+
+Sixth, the theoretical one-step comparison in Stich et al. should not be
+treated as a direct guarantee for this benchmark. This project retains
+coordinate-specific $L_j$ values and exact coordinate minimization, so
+its experimental update convention differs from assumptions required
+for a direct application of the paper's comparison theorem.
+
+Finally, objective gaps reported at or near zero can be limited by
+floating-point precision. All convergence claims should therefore be
+understood relative to the declared numerical targets and implementation
+precision.
 
 
+% =============================================================================
 \section{Conclusion and future research}
+% =============================================================================
 
-The study now provides a progression from exploratory baseline sampling
-rules to a published ASCD mechanism and then to a direct analysis of
-oracle quality.
+This study began with a simple practical question: when does the
+additional information used by adaptive coordinate selection justify
+its computational cost?
 
-The zero-oracle ASCD active set remains almost always full because its
-certified lower bounds collapse to zero. Exact inner-product information
-removes this mechanism, reduces the median active set to one coordinate,
-and reaches the target in every run.
+The baseline study shows that the answer cannot be reduced to
+``adaptive is better.'' The tested gradient-gain refresh heuristics
+succeed on some regimes and fail on others.
 
-Whether the extra information pays for itself depends on the benchmark
-regime. Under the modelled dense-Gram setup charge, exact $g^1$ is more
-expensive than $g^3$ on the independent synthetic cases but cheaper on
-the correlated cases and diabetes.
+The published zero-oracle ASCD comparison likewise gives a mixed result.
+It increases scaled-correlated success count on the original benchmark
+but provides almost no active-set pruning and records greater paired
+proxy work than uniform sampling on their shared successful instances.
 
-The tested simulated approximate oracles do not provide a successful
-middle regime. Under the predeclared Stage 4 decision rule, these results
-do not justify proceeding directly to a costed implementation of the
-tested approximate precision levels.
+The Stage~4 oracle analysis identifies a concrete mechanism for this
+failure to prune. Under $g^3$, certified uncertainty drives the lower
+bounds to zero and leaves the safe active set effectively full. Exact
+$g^1$ reverses this behavior and reduces selection to one coordinate.
 
-A finer precision sweep between $\epsilon=0.125$ and the exact limit could
-be investigated later, but would be a post-hoc exploratory extension.
-Likewise, a genuinely costed approximate-inner-product implementation
-would require its acquisition mechanism to be specified and charged
-explicitly before making cost-effectiveness claims.
+Most importantly, Stage~5 confirms that this mechanism persists beyond
+the development benchmark. On all eight held-out problem families,
+zero-oracle ASCD retains a full median active set with complete median
+lower-bound collapse, whereas exact-oracle ASCD has a one-coordinate
+median active set.
 
-Broader datasets, repeated wall-clock measurements, uncertainty analyses,
-and harmonized implementation boundaries would be required before making
-stronger claims about general computational advantage.
+The computational consequence is regime-dependent. Exact information
+has lower paired median time to target on five Stage~5 families but is
+more than three times as slow as $g^3$ on the two scaled synthetic
+families under the measured implementation. On the strongest scaled
+family it also succeeds less often at the primary target. Residential
+Building supplies a separate negative result in which no method reaches
+the primary target within the declared budget.
+
+The resulting research conclusion is therefore not that exact
+information is always worth acquiring. Rather, \emph{oracle information
+quality strongly determines whether the ASCD active-set mechanism can
+prune, but whether that information pays for itself depends on the
+problem regime and information-acquisition cost}.
+
+A publication-oriented extension could investigate a genuinely costed
+approximate-inner-product oracle or another theoretically motivated
+information-acquisition rule. Such an extension should define the
+acquisition mechanism and its cost before inspecting results and should
+be evaluated separately from the completed confirmatory study.
+
+Before any such methodological extension, the present work can be
+completed through a final reproducibility and synthesis stage:
+auditing all reported numbers against the generated artifacts, freezing
+the experimental outputs, pinning the computational environment,
+documenting exact reproduction commands, and performing a final
+page-by-page report review.
 
 
 \paragraph{Acknowledgement and research provenance.}
 AI assistance was used in developing the baseline benchmark, ASCD
-implementation, Stage 3 paired analysis, Stage 4 diagnostic and
-oracle-comparison workflows, plotting, analysis, and report text. The code
-and generated outputs accompany the report for reproducibility.
-Descriptions of independent authorship should reflect the author's actual
-personal verification, decisions, and revisions. Applicable citation and
-AI-disclosure requirements should be followed.
+implementation, Stage~3 paired analysis, Stage~4 diagnostic and
+oracle-comparison workflows, Stage~5 protocol and implementation,
+plotting, analysis, and report text. The code, protocol documents, and
+generated outputs accompany the report for reproducibility.
+Descriptions of independent authorship should reflect the author's
+actual personal verification, decisions, and revisions. Applicable
+citation and AI-disclosure requirements should be followed.
 
 
+% =============================================================================
 \begin{thebibliography}{9}
 
 \bibitem{gower2016}
-R. M. Gower, D. Goldfarb, and P. Richt\'arik.
-Stochastic block BFGS: Squeezing more curvature out of data.
-\emph{Proceedings of ICML}, 2016.
+R.~M. Gower, D. Goldfarb, and P. Richtárik.
+\newblock Stochastic block BFGS: Squeezing more curvature out of data.
+\newblock \emph{Proceedings of ICML}, 2016.
+\newblock
 \url{https://proceedings.mlr.press/v48/gower16.pdf}.
 
 \bibitem{konecny2016}
-J. Kone\v{c}n\'y, J. Liu, P. Richt\'arik, and M. Tak\'a\v{c}.
-Mini-batch semi-stochastic gradient descent in the proximal setting.
-\emph{IEEE Journal of Selected Topics in Signal Processing}, 2016.
+J. Konečný, J. Liu, P. Richtárik, and M. Takáč.
+\newblock Mini-batch semi-stochastic gradient descent in the proximal
+setting.
+\newblock \emph{IEEE Journal of Selected Topics in Signal Processing},
+2016.
+\newblock
 \url{https://www.pure.ed.ac.uk/ws/portalfiles/portal/26531306/07347336.pdf}.
 
 \bibitem{richtarik2016}
-P. Richt\'arik and M. Tak\'a\v{c}.
-Parallel coordinate descent methods for big data optimization.
-\emph{Mathematical Programming}, 2016.
+P. Richtárik and M. Takáč.
+\newblock Parallel coordinate descent methods for big data optimization.
+\newblock \emph{Mathematical Programming}, 2016.
+\newblock
 \url{https://arxiv.org/abs/1212.0873}.
 
 \bibitem{gower2015}
-R. M. Gower and P. Richt\'arik.
-Randomized iterative methods for linear systems.
-\emph{SIAM Journal on Matrix Analysis and Applications}, 2015.
+R.~M. Gower and P. Richtárik.
+\newblock Randomized iterative methods for linear systems.
+\newblock \emph{SIAM Journal on Matrix Analysis and Applications}, 2015.
+\newblock
 \url{https://arxiv.org/abs/1506.03296}.
 
 \bibitem{fercoq2015}
-O. Fercoq and P. Richt\'arik.
-Accelerated, parallel, and proximal coordinate descent.
-\emph{SIAM Journal on Optimization}, 2015.
+O. Fercoq and P. Richtárik.
+\newblock Accelerated, parallel, and proximal coordinate descent.
+\newblock \emph{SIAM Journal on Optimization}, 2015.
+\newblock
 \url{https://arxiv.org/abs/1312.5799}.
 
 \bibitem{csiba2015}
-D. Csiba, Z. Qu, and P. Richt\'arik.
-Stochastic dual coordinate ascent with adaptive probabilities.
+D. Csiba, Z. Qu, and P. Richtárik.
+\newblock Stochastic dual coordinate ascent with adaptive probabilities.
+\newblock
 \url{https://arxiv.org/abs/1502.08053}.
 
 \bibitem{perekrestenko2017}
 D. Perekrestenko, V. Cevher, and M. Jaggi.
-Faster coordinate descent via adaptive importance sampling.
-\emph{Proceedings of AISTATS}, 2017.
+\newblock Faster coordinate descent via adaptive importance sampling.
+\newblock \emph{Proceedings of AISTATS}, 2017.
+\newblock
 \url{https://proceedings.mlr.press/v54/perekrestenko17a.html}.
 
 \bibitem{stich2017}
-S. U. Stich, A. Raj, and M. Jaggi.
-Approximate steepest coordinate descent.
-\emph{Proceedings of ICML}, 2017.
+S.~U. Stich, A. Raj, and M. Jaggi.
+\newblock Approximate steepest coordinate descent.
+\newblock \emph{Proceedings of ICML}, 2017.
+\newblock
 \url{https://proceedings.mlr.press/v70/stich17a.html}.
 
 \end{thebibliography}

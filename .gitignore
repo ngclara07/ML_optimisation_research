@@ -24,3 +24,12 @@ report/Research Report.docx
 # Execution logs
 results/*.log
 "@ | Add-Content .gitignore
+
+# Stage 5 downloaded/raw data cache
+data/stage5_cache/
+
+# Stage 5 regenerable prepared binary datasets
+results/stage5_confirmatory/prepared_data/
+
+# Temporary local backup files
+*.bak

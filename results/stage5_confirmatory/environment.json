@@ -1,0 +1,119 @@
+{
+  "stage": 5,
+  "experiment": "confirmatory benchmark",
+  "started_at_utc": "2026-09-26T01:24:28+00:00",
+  "completed_at_utc": "2026-09-26T01:32:21+00:00",
+  "dataset_manifest": "results\\stage5_confirmatory\\dataset_manifest.json",
+  "dataset_manifest_sha256": "a90af9f8d5d5e74425e7279ce101336b8a062263d54ed9db88fd132e2748c637",
+  "dataset_manifest_generated_at_utc": "2026-09-26T01:15:15+00:00",
+  "git": {
+    "head": "befaea43abafd010cead0bf6e1b58e7943392fb5",
+    "branch": "main",
+    "status_porcelain": "M requirements.txt\n?? data/\n?? results/stage5_confirmatory/prepared_data/\n?? results/stage5_confirmatory/run_results.csv\n?? results/stage5_confirmatory/trajectories.csv\n?? src/stage5_analyze.py\n?? src/stage5_prepare_data.py.pre_residential_lag_fix.bak"
+  },
+  "platform": {
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "python_executable": "C:\\Users\\CLara\\Documents\\postgrads\\KAUST VSRP (KSA)\\kaust_optimisation_research\\.venv\\Scripts\\python.exe",
+    "operating_system": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 197 Stepping 2, GenuineIntel",
+    "logical_cpu_count": 16
+  },
+  "packages": {
+    "numpy": "2.5.3",
+    "threadpoolctl": "3.7.0",
+    "scikit_learn": "1.9.1"
+  },
+  "threadpool_policy": {
+    "requested_threads": 1,
+    "threadpool_info_while_limited": [
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "C:\\Users\\CLara\\Documents\\postgrads\\KAUST VSRP (KSA)\\kaust_optimisation_research\\.venv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-ed4f167a5330424524f45258e7ca2c8d.dll",
+        "version": "0.3.34.106.0",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      }
+    ]
+  },
+  "timer": {
+    "implementation": "QueryPerformanceCounter()",
+    "monotonic": true,
+    "adjustable": false,
+    "resolution_seconds": 1e-07
+  },
+  "objective": {
+    "lambda": 0.03
+  },
+  "convergence": {
+    "primary_relative_gap": 1e-06,
+    "secondary_relative_gap": 0.0001,
+    "normalized_gap_definition": "(f(w)-f*) / max(f(w0)-f*, 1e-30)",
+    "maximum_coordinate_epochs": 200,
+    "checkpoint_coordinate_epochs": 5
+  },
+  "timing_protocol": {
+    "warmup_executions_per_method_problem": 1,
+    "timed_repetitions_per_method_problem": 3,
+    "method_specific_setup_included": true,
+    "coordinate_selection_included": true,
+    "coordinate_updates_included": true,
+    "g1_gram_acquisition_included": true,
+    "checkpoint_evaluation_excluded_from_primary_runtime": true,
+    "dense_reference_optimum_excluded_from_method_runtime": true
+  },
+  "proxy_model": {
+    "primary_role": "secondary accounting measure; not exact FLOPs",
+    "common_setup": "n*d + d",
+    "lipschitz_additional_setup": "2*d",
+    "ascd_full_gradient_setup": "n*d + d",
+    "base_coordinate_update": "2*n + 3",
+    "ascd_selection_and_maintenance_per_update": "d*ceil(log2(d)) + 3*d",
+    "g1_oracle_acquisition": "n*d*d",
+    "checkpoint_evaluation": "n + d, reported separately and excluded from method proxy"
+  },
+  "methods": [
+    "uniform",
+    "lipschitz",
+    "ascd_g3_zero",
+    "ascd_g1_exact"
+  ],
+  "algorithm_seeds": [
+    9100,
+    9101,
+    9102,
+    9103,
+    9104,
+    9105,
+    9106,
+    9107,
+    9108,
+    9109,
+    9110,
+    9111
+  ],
+  "synthetic_problem_seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111
+  ],
+  "completed_run_rows": 384,
+  "completed_trajectory_rows": 15744,
+  "outputs": {
+    "run_results": "results\\stage5_confirmatory\\run_results.csv",
+    "trajectories": "results\\stage5_confirmatory\\trajectories.csv",
+    "environment": "results\\stage5_confirmatory\\environment.json"
+  }
+}
