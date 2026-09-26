@@ -55,15 +55,15 @@ The initial benchmark compares:
 
 The ridge objective is
 
-\[
+$$
 f(w)
 =
-\frac{1}{2}\|Xw-y\|_2^2
+\frac{1}{2}\lVert Xw-y\rVert_2^2
 +
-\frac{\lambda}{2}\|w\|_2^2,
+\frac{\lambda}{2}\lVert w\rVert_2^2,
 \qquad
-\lambda=0.03.
-\]
+\lambda = 0.03.
+$$
 
 Each coordinate update uses exact coordinate minimization.
 
@@ -109,7 +109,7 @@ Stage 3 implements the selection mechanism of:
 Sebastian U. Stich, Anant Raj, and Martin Jaggi,
 **Approximate Steepest Coordinate Descent**, ICML 2017.
 
-The implementation uses the paper's zero oracle \(g^3\) with exact
+The implementation uses the paper's zero oracle $g^3$ with exact
 full-gradient initialization while retaining this project's exact
 ridge-coordinate update.
 
@@ -236,12 +236,12 @@ For Residential Building:
 
 The normalized objective gap is
 
-\[
+$$
 R_t
 =
 \frac{f(w_t)-f^\star}
-{\max\{f(w_0)-f^\star,10^{-30}\}}.
-\]
+{\max\left\{f(w_0)-f^\star,\,10^{-30}\right\}}.
+$$
 
 Primary target:
 
@@ -358,7 +358,7 @@ Stage 6 outputs are stored in:
 
 `results/stage6_finalization/`
 
-The planned final release tag is:
+The final frozen research release tag is:
 
 `final-research-2026-09-26`
 
