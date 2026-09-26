@@ -66,6 +66,7 @@ from __future__ import annotations
 import argparse
 import contextlib
 import hashlib
+import importlib
 import importlib.metadata
 import io
 import json
@@ -701,6 +702,13 @@ def threadpool_information() -> dict[str, Any]:
 def pdf_page_count(
     path: Path,
 ) -> dict[str, Any]:
+    """Return the PDF page count using optional readers or safe fallbacks.
+
+    The Python PDF libraries are intentionally loaded dynamically so that
+    pypdf and PyPDF2 remain optional dependencies. This avoids requiring
+    either package solely for Stage 6 provenance auditing.
+    """
+
     if not path.is_file():
         return {
             "pages": None,
@@ -708,61 +716,49 @@ def pdf_page_count(
         }
 
     # -------------------------------------------------------------------------
-    # First preference: pypdf
+    # First preference: optional Python PDF readers
     # -------------------------------------------------------------------------
 
-    try:
-        from pypdf import PdfReader
-
-        reader = PdfReader(
-            str(
-                path
-            )
-        )
-
-        return {
-            "pages": (
-                len(
-                    reader.pages
+    for module_name in (
+        "pypdf",
+        "PyPDF2",
+    ):
+        try:
+            module = (
+                importlib.import_module(
+                    module_name
                 )
-            ),
-            "method": (
-                "pypdf"
-            ),
-        }
-
-    except Exception:
-        pass
-
-    # -------------------------------------------------------------------------
-    # Second preference: PyPDF2
-    # -------------------------------------------------------------------------
-
-    try:
-        from PyPDF2 import PdfReader
-
-        reader = PdfReader(
-            str(
-                path
             )
-        )
 
-        return {
-            "pages": (
-                len(
-                    reader.pages
+            pdf_reader = getattr(
+                module,
+                "PdfReader",
+            )
+
+            reader = pdf_reader(
+                str(
+                    path
                 )
-            ),
-            "method": (
-                "PyPDF2"
-            ),
-        }
+            )
 
-    except Exception:
-        pass
+            return {
+                "pages": (
+                    len(
+                        reader.pages
+                    )
+                ),
+                "method": (
+                    module_name
+                ),
+            }
+
+        except Exception:
+            # The package may be absent, incompatible, or unable to read
+            # the particular PDF. Continue to the next supported method.
+            pass
 
     # -------------------------------------------------------------------------
-    # Third preference: pdfinfo executable
+    # Second preference: pdfinfo executable
     # -------------------------------------------------------------------------
 
     result = run_command(
@@ -803,10 +799,17 @@ def pdf_page_count(
             }
 
     # -------------------------------------------------------------------------
-    # Last-resort structural approximation.
+    # Last-resort structural approximation
     # -------------------------------------------------------------------------
 
-    data = path.read_bytes()
+    try:
+        data = path.read_bytes()
+
+    except OSError:
+        return {
+            "pages": None,
+            "method": None,
+        }
 
     matches = re.findall(
         rb"/Type\s*/Page\b",
