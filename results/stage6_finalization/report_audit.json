@@ -1,0 +1,2924 @@
+{
+  "stage": 6,
+  "audit": "final numerical and report claim audit",
+  "generated_at_utc": "2026-09-26T03:00:38+00:00",
+  "git": {
+    "commit": "09aee7cc267a88ecefc4c5a23cf0ba3f613674ed",
+    "short_commit": "09aee7c",
+    "branch": "main"
+  },
+  "checks_total": 327,
+  "checks_passed": 327,
+  "checks_failed": 0,
+  "overall_status": "PASSED",
+  "checks": [
+    {
+      "id": "file_exists:report/main.tex",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "report/main.tex",
+      "note": ""
+    },
+    {
+      "id": "file_exists:results_baseline_v1/trajectories.csv",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "file_exists:results/published_ascd/summary.json",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "file_exists:results/published_ascd/trajectories.csv",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/published_ascd/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "file_exists:results/stage4_oracle_analysis/oracle_summary.json",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "file_exists:results/stage5_confirmatory/dataset_manifest.json",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "file_exists:results/stage5_confirmatory/summary.json",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "file_exists:results/stage5_confirmatory/timing_summary.json",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/timing_summary.json",
+      "note": ""
+    },
+    {
+      "id": "file_exists:results/stage5_confirmatory/run_results.csv",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/run_results.csv",
+      "note": ""
+    },
+    {
+      "id": "file_exists:results/stage5_confirmatory/trajectories.csv",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:balanced_independent:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:balanced_independent:lipschitz",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:balanced_independent:scheduled_gain",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:balanced_independent:triggered_gain",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:scaled_independent:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:scaled_independent:lipschitz",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:scaled_independent:scheduled_gain",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:scaled_independent:triggered_gain",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:balanced_correlated:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:balanced_correlated:lipschitz",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:balanced_correlated:scheduled_gain",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:balanced_correlated:triggered_gain",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:scaled_correlated:uniform",
+      "status": "PASSED",
+      "expected": 6,
+      "observed": 6,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:scaled_correlated:lipschitz",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:scaled_correlated:scheduled_gain",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:scaled_correlated:triggered_gain",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:diabetes:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:diabetes:lipschitz",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:diabetes:scheduled_gain",
+      "status": "PASSED",
+      "expected": 9,
+      "observed": 9,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "baseline_success:diabetes:triggered_gain",
+      "status": "PASSED",
+      "expected": 5,
+      "observed": 5,
+      "source": "results_baseline_v1/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "stage3_summary_row:balanced_independent",
+      "status": "PASSED",
+      "expected": true,
+      "observed": "balanced_independent",
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_success:balanced_independent",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_work:balanced_independent",
+      "status": "PASSED",
+      "expected": 762936.0,
+      "observed": 762936.0,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_active_set:balanced_independent",
+      "status": "PASSED",
+      "expected": 48.0,
+      "observed": 48.0,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_summary_row:scaled_independent",
+      "status": "PASSED",
+      "expected": true,
+      "observed": "scaled_independent",
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_success:scaled_independent",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_work:scaled_independent",
+      "status": "PASSED",
+      "expected": 762936.0,
+      "observed": 762936.0,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_active_set:scaled_independent",
+      "status": "PASSED",
+      "expected": 48.0,
+      "observed": 48.0,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_summary_row:balanced_correlated",
+      "status": "PASSED",
+      "expected": true,
+      "observed": "balanced_correlated",
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_success:balanced_correlated",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_work:balanced_correlated",
+      "status": "PASSED",
+      "expected": 2249416.0,
+      "observed": 2249416.0,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_active_set:balanced_correlated",
+      "status": "PASSED",
+      "expected": 48.0,
+      "observed": 48.0,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_summary_row:scaled_correlated",
+      "status": "PASSED",
+      "expected": true,
+      "observed": "scaled_correlated",
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_success:scaled_correlated",
+      "status": "PASSED",
+      "expected": 9,
+      "observed": 9,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_work:scaled_correlated",
+      "status": "PASSED",
+      "expected": 2844008.0,
+      "observed": 2844008.0,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_active_set:scaled_correlated",
+      "status": "PASSED",
+      "expected": 48.0,
+      "observed": 48.0,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_summary_row:diabetes",
+      "status": "PASSED",
+      "expected": true,
+      "observed": "diabetes",
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_success:diabetes",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_work:diabetes",
+      "status": "PASSED",
+      "expected": 984864.0,
+      "observed": 984864.0,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_active_set:diabetes",
+      "status": "PASSED",
+      "expected": 10.0,
+      "observed": 10.0,
+      "source": "results/published_ascd/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage3_scaled_correlated_method_detected",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "ascd_zero_oracle"
+      ],
+      "source": "results/published_ascd/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "stage3_shared_success_count",
+      "status": "PASSED",
+      "expected": 5,
+      "observed": 5,
+      "source": "results/published_ascd/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "stage3_shared_success_seeds",
+      "status": "PASSED",
+      "expected": [
+        0,
+        4,
+        5,
+        6,
+        10
+      ],
+      "observed": [
+        0,
+        4,
+        5,
+        6,
+        10
+      ],
+      "source": "results/published_ascd/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "stage3_ascd_work_greater_on_every_shared_success",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        997336.0,
+        1145984.0,
+        940848.0,
+        894768.0,
+        1202472.0
+      ],
+      "source": "results/published_ascd/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "stage3_median_paired_work_difference",
+      "status": "PASSED",
+      "expected": 997336.0,
+      "observed": 997336.0,
+      "source": "results/published_ascd/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "stage3_median_paired_work_ratio",
+      "status": "PASSED",
+      "expected": 1.5401,
+      "observed": 1.5400720864344075,
+      "source": "results/published_ascd/trajectories.csv",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:balanced_independent:g3_zero",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_independent",
+        "g3_zero"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_independent:g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_active:balanced_independent",
+      "status": "PASSED",
+      "expected": 48.0,
+      "observed": 48.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_zero_lower:balanced_independent",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_effectively_full:balanced_independent",
+      "status": "PASSED",
+      "expected": true,
+      "observed": 0.9994097222222222,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": "Threshold is an audit of the report's approximately-full statement."
+    },
+    {
+      "id": "stage4_row:balanced_independent:g2_eps_1",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_independent",
+        "g2_eps_1"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_independent:g2_eps_1",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:balanced_independent:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_independent",
+        "g2_eps_0p5"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_independent:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:balanced_independent:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:balanced_independent:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_independent",
+        "g2_eps_0p25"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_independent:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:balanced_independent:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:balanced_independent:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_independent",
+        "g2_eps_0p125"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_independent:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:balanced_independent:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:balanced_independent:g1_exact",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_independent",
+        "g1_exact"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_independent:g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g1_active:balanced_independent",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:scaled_independent:g3_zero",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_independent",
+        "g3_zero"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_independent:g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_active:scaled_independent",
+      "status": "PASSED",
+      "expected": 48.0,
+      "observed": 48.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_zero_lower:scaled_independent",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_effectively_full:scaled_independent",
+      "status": "PASSED",
+      "expected": true,
+      "observed": 0.9994444444444445,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": "Threshold is an audit of the report's approximately-full statement."
+    },
+    {
+      "id": "stage4_row:scaled_independent:g2_eps_1",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_independent",
+        "g2_eps_1"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_independent:g2_eps_1",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:scaled_independent:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_independent",
+        "g2_eps_0p5"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_independent:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:scaled_independent:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:scaled_independent:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_independent",
+        "g2_eps_0p25"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_independent:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:scaled_independent:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:scaled_independent:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_independent",
+        "g2_eps_0p125"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_independent:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:scaled_independent:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:scaled_independent:g1_exact",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_independent",
+        "g1_exact"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_independent:g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g1_active:scaled_independent",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:balanced_correlated:g3_zero",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_correlated",
+        "g3_zero"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_correlated:g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_active:balanced_correlated",
+      "status": "PASSED",
+      "expected": 48.0,
+      "observed": 48.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_zero_lower:balanced_correlated",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_effectively_full:balanced_correlated",
+      "status": "PASSED",
+      "expected": true,
+      "observed": 0.9994444444444445,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": "Threshold is an audit of the report's approximately-full statement."
+    },
+    {
+      "id": "stage4_row:balanced_correlated:g2_eps_1",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_correlated",
+        "g2_eps_1"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_correlated:g2_eps_1",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:balanced_correlated:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_correlated",
+        "g2_eps_0p5"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_correlated:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:balanced_correlated:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:balanced_correlated:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_correlated",
+        "g2_eps_0p25"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_correlated:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:balanced_correlated:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:balanced_correlated:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_correlated",
+        "g2_eps_0p125"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_correlated:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:balanced_correlated:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:balanced_correlated:g1_exact",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "balanced_correlated",
+        "g1_exact"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:balanced_correlated:g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g1_active:balanced_correlated",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:scaled_correlated:g3_zero",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_correlated",
+        "g3_zero"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_correlated:g3_zero",
+      "status": "PASSED",
+      "expected": 9,
+      "observed": 9,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_active:scaled_correlated",
+      "status": "PASSED",
+      "expected": 48.0,
+      "observed": 48.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_zero_lower:scaled_correlated",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_effectively_full:scaled_correlated",
+      "status": "PASSED",
+      "expected": true,
+      "observed": 0.999375,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": "Threshold is an audit of the report's approximately-full statement."
+    },
+    {
+      "id": "stage4_row:scaled_correlated:g2_eps_1",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_correlated",
+        "g2_eps_1"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_correlated:g2_eps_1",
+      "status": "PASSED",
+      "expected": 11,
+      "observed": 11,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:scaled_correlated:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_correlated",
+        "g2_eps_0p5"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_correlated:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:scaled_correlated:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:scaled_correlated:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_correlated",
+        "g2_eps_0p25"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_correlated:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:scaled_correlated:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:scaled_correlated:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_correlated",
+        "g2_eps_0p125"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_correlated:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:scaled_correlated:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": 47.0,
+      "observed": 47.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:scaled_correlated:g1_exact",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "scaled_correlated",
+        "g1_exact"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:scaled_correlated:g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g1_active:scaled_correlated",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:diabetes:g3_zero",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "diabetes",
+        "g3_zero"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:diabetes:g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_active:diabetes",
+      "status": "PASSED",
+      "expected": 10.0,
+      "observed": 10.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_zero_lower:diabetes",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g3_effectively_full:diabetes",
+      "status": "PASSED",
+      "expected": true,
+      "observed": 0.9995833333333334,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": "Threshold is an audit of the report's approximately-full statement."
+    },
+    {
+      "id": "stage4_row:diabetes:g2_eps_1",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "diabetes",
+        "g2_eps_1"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:diabetes:g2_eps_1",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:diabetes:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "diabetes",
+        "g2_eps_0p5"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:diabetes:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:diabetes:g2_eps_0p5",
+      "status": "PASSED",
+      "expected": 9.0,
+      "observed": 9.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:diabetes:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "diabetes",
+        "g2_eps_0p25"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:diabetes:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:diabetes:g2_eps_0p25",
+      "status": "PASSED",
+      "expected": 9.0,
+      "observed": 9.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:diabetes:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "diabetes",
+        "g2_eps_0p125"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:diabetes:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_intermediate_active:diabetes:g2_eps_0p125",
+      "status": "PASSED",
+      "expected": 9.0,
+      "observed": 9.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_row:diabetes:g1_exact",
+      "status": "PASSED",
+      "expected": true,
+      "observed": [
+        "diabetes",
+        "g1_exact"
+      ],
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_success:diabetes:g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_g1_active:diabetes",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_costed_ratio:balanced_independent",
+      "status": "PASSED",
+      "expected": 1.62345465,
+      "observed": 1.623454654125641,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_costed_ratio:scaled_independent",
+      "status": "PASSED",
+      "expected": 1.62345465,
+      "observed": 1.623454654125641,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_costed_ratio:balanced_correlated",
+      "status": "PASSED",
+      "expected": 0.74887704,
+      "observed": 0.7488770418633103,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_costed_ratio:scaled_correlated",
+      "status": "PASSED",
+      "expected": 0.85364598,
+      "observed": 0.8536459813052565,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage4_costed_ratio:diabetes",
+      "status": "PASSED",
+      "expected": 0.16747397,
+      "observed": 0.167473965233292,
+      "source": "results/stage4_oracle_analysis/oracle_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_split_seed",
+      "status": "PASSED",
+      "expected": 20260926,
+      "observed": 20260926,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_train_fraction",
+      "status": "PASSED",
+      "expected": 0.8,
+      "observed": 0.8,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_test_fraction",
+      "status": "PASSED",
+      "expected": 0.2,
+      "observed": 0.2,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_synthetic_n",
+      "status": "PASSED",
+      "expected": 800,
+      "observed": 800,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_synthetic_d",
+      "status": "PASSED",
+      "expected": 96,
+      "observed": 96,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_synthetic_seeds",
+      "status": "PASSED",
+      "expected": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111
+      ],
+      "observed": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111
+      ],
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_noise_std",
+      "status": "PASSED",
+      "expected": 0.15,
+      "observed": 0.15,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_real_dataset_count",
+      "status": "PASSED",
+      "expected": 4,
+      "observed": 4,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_synthetic_instance_count",
+      "status": "PASSED",
+      "expected": 48,
+      "observed": 48,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_manifest_row",
+      "status": "PASSED",
+      "expected": true,
+      "observed": "residential_building",
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_target",
+      "status": "PASSED",
+      "expected": "V-9",
+      "observed": "V-9",
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_predictor_count",
+      "status": "PASSED",
+      "expected": 107,
+      "observed": 107,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_feature_name_count",
+      "status": "PASSED",
+      "expected": 107,
+      "observed": 107,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_unique_feature_names",
+      "status": "PASSED",
+      "expected": 107,
+      "observed": 107,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_no_v9_leakage",
+      "status": "PASSED",
+      "expected": true,
+      "observed": false,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_no_v10_leakage",
+      "status": "PASSED",
+      "expected": true,
+      "observed": false,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_lag_name:V-11_lag1",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_lag_name:V-29_lag1",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_lag_name:V-11_lag5",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_lag_name:V-29_lag5",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/dataset_manifest.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_target",
+      "status": "PASSED",
+      "expected": 1e-06,
+      "observed": 1e-06,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_secondary_target",
+      "status": "PASSED",
+      "expected": 0.0001,
+      "observed": 0.0001,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_bootstrap_resamples",
+      "status": "PASSED",
+      "expected": 10000,
+      "observed": 10000,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_run_rows",
+      "status": "PASSED",
+      "expected": 384,
+      "observed": 384,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_trajectory_rows",
+      "status": "PASSED",
+      "expected": 15744,
+      "observed": 15744,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_checkpoints_per_run",
+      "status": "PASSED",
+      "expected": 41,
+      "observed": 41,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_dimensions:heldout_balanced_moderate",
+      "status": "PASSED",
+      "expected": [
+        800,
+        96
+      ],
+      "observed": [
+        800,
+        96
+      ],
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_balanced_moderate:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_balanced_moderate:lipschitz",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_balanced_moderate:ascd_g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_balanced_moderate:ascd_g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_active_fraction:heldout_balanced_moderate",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_zero_lower:heldout_balanced_moderate",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_size:heldout_balanced_moderate",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_fraction:heldout_balanced_moderate",
+      "status": "PASSED",
+      "expected": 0.010416666666666666,
+      "observed": 0.010416666666666666,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_dimensions:heldout_balanced_strong",
+      "status": "PASSED",
+      "expected": [
+        800,
+        96
+      ],
+      "observed": [
+        800,
+        96
+      ],
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_balanced_strong:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_balanced_strong:lipschitz",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_balanced_strong:ascd_g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_balanced_strong:ascd_g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_active_fraction:heldout_balanced_strong",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_zero_lower:heldout_balanced_strong",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_size:heldout_balanced_strong",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_fraction:heldout_balanced_strong",
+      "status": "PASSED",
+      "expected": 0.010416666666666666,
+      "observed": 0.010416666666666666,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_dimensions:heldout_scaled_moderate",
+      "status": "PASSED",
+      "expected": [
+        800,
+        96
+      ],
+      "observed": [
+        800,
+        96
+      ],
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_scaled_moderate:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_scaled_moderate:lipschitz",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_scaled_moderate:ascd_g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_scaled_moderate:ascd_g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_active_fraction:heldout_scaled_moderate",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_zero_lower:heldout_scaled_moderate",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_size:heldout_scaled_moderate",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_fraction:heldout_scaled_moderate",
+      "status": "PASSED",
+      "expected": 0.010416666666666666,
+      "observed": 0.010416666666666666,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_dimensions:heldout_scaled_strong",
+      "status": "PASSED",
+      "expected": [
+        800,
+        96
+      ],
+      "observed": [
+        800,
+        96
+      ],
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_scaled_strong:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_scaled_strong:lipschitz",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_scaled_strong:ascd_g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:heldout_scaled_strong:ascd_g1_exact",
+      "status": "PASSED",
+      "expected": 9,
+      "observed": 9,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_active_fraction:heldout_scaled_strong",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_zero_lower:heldout_scaled_strong",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_size:heldout_scaled_strong",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_fraction:heldout_scaled_strong",
+      "status": "PASSED",
+      "expected": 0.010416666666666666,
+      "observed": 0.010416666666666666,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_dimensions:california_housing",
+      "status": "PASSED",
+      "expected": [
+        16512,
+        8
+      ],
+      "observed": [
+        16512,
+        8
+      ],
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:california_housing:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:california_housing:lipschitz",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:california_housing:ascd_g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:california_housing:ascd_g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_active_fraction:california_housing",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_zero_lower:california_housing",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_size:california_housing",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_fraction:california_housing",
+      "status": "PASSED",
+      "expected": 0.125,
+      "observed": 0.125,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_dimensions:concrete_compressive_strength",
+      "status": "PASSED",
+      "expected": [
+        824,
+        8
+      ],
+      "observed": [
+        824,
+        8
+      ],
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:concrete_compressive_strength:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:concrete_compressive_strength:lipschitz",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:concrete_compressive_strength:ascd_g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:concrete_compressive_strength:ascd_g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_active_fraction:concrete_compressive_strength",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_zero_lower:concrete_compressive_strength",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_size:concrete_compressive_strength",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_fraction:concrete_compressive_strength",
+      "status": "PASSED",
+      "expected": 0.125,
+      "observed": 0.125,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_dimensions:airfoil_self_noise",
+      "status": "PASSED",
+      "expected": [
+        1202,
+        5
+      ],
+      "observed": [
+        1202,
+        5
+      ],
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:airfoil_self_noise:uniform",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:airfoil_self_noise:lipschitz",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:airfoil_self_noise:ascd_g3_zero",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:airfoil_self_noise:ascd_g1_exact",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_active_fraction:airfoil_self_noise",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_zero_lower:airfoil_self_noise",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_size:airfoil_self_noise",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_fraction:airfoil_self_noise",
+      "status": "PASSED",
+      "expected": 0.2,
+      "observed": 0.2,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_dimensions:residential_building",
+      "status": "PASSED",
+      "expected": [
+        297,
+        107
+      ],
+      "observed": [
+        297,
+        107
+      ],
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:residential_building:uniform",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:residential_building:lipschitz",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:residential_building:ascd_g3_zero",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_primary_success:residential_building:ascd_g1_exact",
+      "status": "PASSED",
+      "expected": 0,
+      "observed": 0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_active_fraction:residential_building",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g3_zero_lower:residential_building",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_size:residential_building",
+      "status": "PASSED",
+      "expected": 1.0,
+      "observed": 1.0,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_g1_active_fraction:residential_building",
+      "status": "PASSED",
+      "expected": 0.009345794392523364,
+      "observed": 0.009345794392523364,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_g1_secondary_successes",
+      "status": "PASSED",
+      "expected": 12,
+      "observed": 12,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_defined:heldout_balanced_moderate",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "n": 12,
+        "median": 0.8178866568244074,
+        "ci95_lower": 0.695382060408763,
+        "ci95_upper": 0.9811014662324673,
+        "bootstrap_resamples": 10000,
+        "bootstrap_seed": 6869560446838688310
+      },
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_median:heldout_balanced_moderate",
+      "status": "PASSED",
+      "expected": 0.8179,
+      "observed": 0.8178866568244074,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_lower:heldout_balanced_moderate",
+      "status": "PASSED",
+      "expected": 0.6954,
+      "observed": 0.695382060408763,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_upper:heldout_balanced_moderate",
+      "status": "PASSED",
+      "expected": 0.9811,
+      "observed": 0.9811014662324673,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_bootstrap_count:heldout_balanced_moderate",
+      "status": "PASSED",
+      "expected": 10000,
+      "observed": 10000,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_defined:heldout_balanced_strong",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "n": 12,
+        "median": 0.8388539968999587,
+        "ci95_lower": 0.7416781923762898,
+        "ci95_upper": 0.9123141309045806,
+        "bootstrap_resamples": 10000,
+        "bootstrap_seed": 7834510510447976247
+      },
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_median:heldout_balanced_strong",
+      "status": "PASSED",
+      "expected": 0.8389,
+      "observed": 0.8388539968999587,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_lower:heldout_balanced_strong",
+      "status": "PASSED",
+      "expected": 0.7417,
+      "observed": 0.7416781923762898,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_upper:heldout_balanced_strong",
+      "status": "PASSED",
+      "expected": 0.9123,
+      "observed": 0.9123141309045806,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_bootstrap_count:heldout_balanced_strong",
+      "status": "PASSED",
+      "expected": 10000,
+      "observed": 10000,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_defined:heldout_scaled_moderate",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "n": 12,
+        "median": 3.2392638154189526,
+        "ci95_lower": 2.6883322403269414,
+        "ci95_upper": 4.261297156772814,
+        "bootstrap_resamples": 10000,
+        "bootstrap_seed": 2439414880512986576
+      },
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_median:heldout_scaled_moderate",
+      "status": "PASSED",
+      "expected": 3.2393,
+      "observed": 3.2392638154189526,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_lower:heldout_scaled_moderate",
+      "status": "PASSED",
+      "expected": 2.6883,
+      "observed": 2.6883322403269414,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_upper:heldout_scaled_moderate",
+      "status": "PASSED",
+      "expected": 4.2613,
+      "observed": 4.261297156772814,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_bootstrap_count:heldout_scaled_moderate",
+      "status": "PASSED",
+      "expected": 10000,
+      "observed": 10000,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_defined:heldout_scaled_strong",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "n": 9,
+        "median": 3.1274451353352934,
+        "ci95_lower": 2.1715082585228513,
+        "ci95_upper": 3.3162061356600083,
+        "bootstrap_resamples": 10000,
+        "bootstrap_seed": 4596552292614745627
+      },
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_median:heldout_scaled_strong",
+      "status": "PASSED",
+      "expected": 3.1274,
+      "observed": 3.1274451353352934,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_lower:heldout_scaled_strong",
+      "status": "PASSED",
+      "expected": 2.1715,
+      "observed": 2.1715082585228513,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_upper:heldout_scaled_strong",
+      "status": "PASSED",
+      "expected": 3.3162,
+      "observed": 3.3162061356600083,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_bootstrap_count:heldout_scaled_strong",
+      "status": "PASSED",
+      "expected": 10000,
+      "observed": 10000,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_defined:california_housing",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "n": 12,
+        "median": 0.20804615272013496,
+        "ci95_lower": 0.18586361660211104,
+        "ci95_upper": 0.28024885998924853,
+        "bootstrap_resamples": 10000,
+        "bootstrap_seed": 6233615527179782043
+      },
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_median:california_housing",
+      "status": "PASSED",
+      "expected": 0.208,
+      "observed": 0.20804615272013496,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_lower:california_housing",
+      "status": "PASSED",
+      "expected": 0.1859,
+      "observed": 0.18586361660211104,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_upper:california_housing",
+      "status": "PASSED",
+      "expected": 0.2802,
+      "observed": 0.28024885998924853,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_bootstrap_count:california_housing",
+      "status": "PASSED",
+      "expected": 10000,
+      "observed": 10000,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_defined:concrete_compressive_strength",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "n": 12,
+        "median": 0.3779066801117101,
+        "ci95_lower": 0.36552507502050596,
+        "ci95_upper": 0.45201180639519956,
+        "bootstrap_resamples": 10000,
+        "bootstrap_seed": 444470880390108066
+      },
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_median:concrete_compressive_strength",
+      "status": "PASSED",
+      "expected": 0.3779,
+      "observed": 0.3779066801117101,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_lower:concrete_compressive_strength",
+      "status": "PASSED",
+      "expected": 0.3655,
+      "observed": 0.36552507502050596,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_upper:concrete_compressive_strength",
+      "status": "PASSED",
+      "expected": 0.452,
+      "observed": 0.45201180639519956,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_bootstrap_count:concrete_compressive_strength",
+      "status": "PASSED",
+      "expected": 10000,
+      "observed": 10000,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_defined:airfoil_self_noise",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "n": 12,
+        "median": 0.5132016516203421,
+        "ci95_lower": 0.3836408491966061,
+        "ci95_upper": 0.6628491690547821,
+        "bootstrap_resamples": 10000,
+        "bootstrap_seed": 6225681528197182619
+      },
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_median:airfoil_self_noise",
+      "status": "PASSED",
+      "expected": 0.5132,
+      "observed": 0.5132016516203421,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_lower:airfoil_self_noise",
+      "status": "PASSED",
+      "expected": 0.3836,
+      "observed": 0.3836408491966061,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_ratio_ci_upper:airfoil_self_noise",
+      "status": "PASSED",
+      "expected": 0.6628,
+      "observed": 0.6628491690547821,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_bootstrap_count:airfoil_self_noise",
+      "status": "PASSED",
+      "expected": 10000,
+      "observed": 10000,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_residential_runtime_ratio_undefined",
+      "status": "PASSED",
+      "expected": null,
+      "observed": null,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_h4_active_set_count",
+      "status": "PASSED",
+      "expected": 8,
+      "observed": 8,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_h4_zero_lower_count",
+      "status": "PASSED",
+      "expected": 8,
+      "observed": 8,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_h4_criterion_met",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_exact_information_sometimes_pays",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_exact_information_qualifying_cases",
+      "status": "PASSED",
+      "expected": [
+        "airfoil_self_noise",
+        "california_housing",
+        "concrete_compressive_strength",
+        "heldout_balanced_moderate",
+        "heldout_balanced_strong"
+      ],
+      "observed": [
+        "airfoil_self_noise",
+        "california_housing",
+        "concrete_compressive_strength",
+        "heldout_balanced_moderate",
+        "heldout_balanced_strong"
+      ],
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_runtime_mixed_direction",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_timing_warmups",
+      "status": "PASSED",
+      "expected": 1,
+      "observed": 1,
+      "source": "results/stage5_confirmatory/timing_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_timing_repetitions",
+      "status": "PASSED",
+      "expected": 3,
+      "observed": 3,
+      "source": "results/stage5_confirmatory/timing_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_timing_protocol:method_specific_setup_included",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/timing_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_timing_protocol:coordinate_selection_included",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/timing_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_timing_protocol:coordinate_updates_included",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/timing_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_timing_protocol:g1_gram_acquisition_included",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/timing_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_timing_protocol:checkpoint_evaluation_excluded_from_primary_runtime",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/timing_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_timing_protocol:dense_reference_optimum_excluded_from_method_runtime",
+      "status": "PASSED",
+      "expected": true,
+      "observed": true,
+      "source": "results/stage5_confirmatory/timing_summary.json",
+      "note": ""
+    },
+    {
+      "id": "stage5_requested_threads",
+      "status": "PASSED",
+      "expected": 1,
+      "observed": 1,
+      "source": "results/stage5_confirmatory/timing_summary.json",
+      "note": ""
+    },
+    {
+      "id": "report_contains_numeric:1.5401",
+      "status": "PASSED",
+      "expected": "contains '1.5401'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:1.6235",
+      "status": "PASSED",
+      "expected": "contains '1.6235'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:0.7489",
+      "status": "PASSED",
+      "expected": "contains '0.7489'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:0.8536",
+      "status": "PASSED",
+      "expected": "contains '0.8536'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:0.1675",
+      "status": "PASSED",
+      "expected": "contains '0.1675'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:0.8179",
+      "status": "PASSED",
+      "expected": "contains '0.8179'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:0.8389",
+      "status": "PASSED",
+      "expected": "contains '0.8389'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:3.2393",
+      "status": "PASSED",
+      "expected": "contains '3.2393'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:3.1274",
+      "status": "PASSED",
+      "expected": "contains '3.1274'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:0.2080",
+      "status": "PASSED",
+      "expected": "contains '0.2080'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:0.3779",
+      "status": "PASSED",
+      "expected": "contains '0.3779'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_contains_numeric:0.5132",
+      "status": "PASSED",
+      "expected": "contains '0.5132'",
+      "observed": true,
+      "source": "report/main.tex",
+      "note": "The numerical value is also independently validated against its canonical Stage 3--5 artifact elsewhere in this audit."
+    },
+    {
+      "id": "report_interpretation_phrase:not_a_reproduction",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "matched": true,
+        "matched_alternatives": [
+          "not reproductions",
+          "not reproductions of"
+        ],
+        "accepted_alternatives": [
+          "not a reproduction",
+          "not reproductions",
+          "not a reproduction of",
+          "not reproductions of"
+        ]
+      },
+      "source": "report/main.tex",
+      "note": "This is a semantic guardrail rather than an exact-sentence requirement."
+    },
+    {
+      "id": "report_interpretation_phrase:bookkeeping",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "matched": true,
+        "matched_alternatives": [
+          "bookkeeping"
+        ],
+        "accepted_alternatives": [
+          "bookkeeping"
+        ]
+      },
+      "source": "report/main.tex",
+      "note": "This is a semantic guardrail rather than an exact-sentence requirement."
+    },
+    {
+      "id": "report_interpretation_phrase:regime_dependent",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "matched": true,
+        "matched_alternatives": [
+          "regime-dependent"
+        ],
+        "accepted_alternatives": [
+          "regime-dependent",
+          "regime dependent"
+        ]
+      },
+      "source": "report/main.tex",
+      "note": "This is a semantic guardrail rather than an exact-sentence requirement."
+    },
+    {
+      "id": "report_interpretation_phrase:not_supported",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "matched": true,
+        "matched_alternatives": [
+          "not supported"
+        ],
+        "accepted_alternatives": [
+          "not supported"
+        ]
+      },
+      "source": "report/main.tex",
+      "note": "This is a semantic guardrail rather than an exact-sentence requirement."
+    },
+    {
+      "id": "report_interpretation_phrase:ai_assistance",
+      "status": "PASSED",
+      "expected": true,
+      "observed": {
+        "matched": true,
+        "matched_alternatives": [
+          "ai assistance"
+        ],
+        "accepted_alternatives": [
+          "ai assistance",
+          "ai-assisted",
+          "ai assisted"
+        ]
+      },
+      "source": "report/main.tex",
+      "note": "This is a semantic guardrail rather than an exact-sentence requirement."
+    },
+    {
+      "id": "report_prohibited_claim:exact ascd is generally faster",
+      "status": "PASSED",
+      "expected": "does not contain 'exact ascd is generally faster'",
+      "observed": false,
+      "source": "report/main.tex",
+      "note": "The Stage 5 confirmatory result is regime-dependent and does not support this universal/general claim."
+    },
+    {
+      "id": "report_prohibited_claim:adaptive coordinate selection is generally superior",
+      "status": "PASSED",
+      "expected": "does not contain 'adaptive coordinate selection is generally superior'",
+      "observed": false,
+      "source": "report/main.tex",
+      "note": "The Stage 5 confirmatory result is regime-dependent and does not support this universal/general claim."
+    },
+    {
+      "id": "report_prohibited_claim:exact information always pays for itself",
+      "status": "PASSED",
+      "expected": "does not contain 'exact information always pays for itself'",
+      "observed": false,
+      "source": "report/main.tex",
+      "note": "The Stage 5 confirmatory result is regime-dependent and does not support this universal/general claim."
+    },
+    {
+      "id": "report_prohibited_claim:ascd is universally superior",
+      "status": "PASSED",
+      "expected": "does not contain 'ascd is universally superior'",
+      "observed": false,
+      "source": "report/main.tex",
+      "note": "The Stage 5 confirmatory result is regime-dependent and does not support this universal/general claim."
+    }
+  ]
+}
